@@ -1,7 +1,6 @@
 # pandaREmart - Recurring pandamart Order
 
-For foodpanda PowerUp! SG Traineeship Program Capstone Project
-By powerupsg-tech-capstone-3 (@vitorio-p, @wkcjay and @ricksonnn)
+For foodpanda PowerUp! SG Traineeship Program Capstone Project  By powerupsg-tech-capstone-3 (@vitorio-p, @wkcjay and @ricksonnn)
 
 ## Problem
 
