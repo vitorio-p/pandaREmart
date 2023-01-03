@@ -7,3 +7,7 @@
   background-color: #E21B70;
   color: white;
 }
+
+.d-flex{
+  gap:10px;
+}

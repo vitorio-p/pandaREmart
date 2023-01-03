@@ -55,7 +55,10 @@ export default class PopularProducts extends React.Component {
         <div className="border">
           <h1 className="text-center">pandamart (RedHill)</h1>
           <h2><b>Popular Products</b></h2>
-          {this.renderItems()}
+          <div className="d-flex p-2">
+            {this.renderItems()}
+          </div>
+          
         </div>
       </React.Fragment>
     );
