@@ -1,7 +1,9 @@
 import React from "react";
-import user from "./img/user.png";
-import cart from "./img/cart.png";
-import foodpanda from "./img/foodpanda.png";
+import {ReactComponent as UserSVG} from './svg/user.svg'
+import {ReactComponent as LikedSVG} from './svg/liked.svg'
+import {ReactComponent as CartSVG} from './svg/cart.svg'
+import {ReactComponent as FoodpandaLogoSVG} from './svg/foodpanda-logo.svg'
+import foodpandalogo from './svg/foodpanda-logo.svg'
 
 export default class NavBar extends React.Component {
   render() {
@@ -9,27 +11,14 @@ export default class NavBar extends React.Component {
       <React.Fragment>
         <nav className="navbar bg-white border">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">
-              <img
-                src={user}
-                alt="User"
-                class="d-inline-block align-text-top"
+            <UserSVG />
+            <img
+              src={foodpandalogo}
+              style={{width: 120}}
+              alt="foodpanda logo"
               />
-            </a>
-            <a className="navbar-brand" href="#">
-              <img
-                src={foodpanda}
-                alt="Logo"
-                class="d-inline-block align-text-top"
-              />
-            </a>
-            <a className="navbar-brand" href="#">
-              <img
-                src={cart}
-                alt="Cart"
-                class="d-inline-block align-text-top"
-              />
-            </a>
+            <LikedSVG />
+            <CartSVG />
           </div>
         </nav>
       </React.Fragment>
