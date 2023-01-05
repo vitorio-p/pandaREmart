@@ -4,6 +4,8 @@ import "./styles.css";
 import milkImage from "./img/meiji-2l-milk.png";
 import eggImage from "./img/dasoon-eggs.webp";
 import breadImage from "./img/bread.jpeg";
+import {ReactComponent as PandaMart} from './svg/pandamart-white.svg'
+
 
 export default class PopularProducts extends React.Component {
   state = {
@@ -51,9 +53,7 @@ export default class PopularProducts extends React.Component {
             <h5 className="card-title">S$ {item.price}</h5>
             <h6 className="card-text">{item.name}</h6>
           </div>
-          <ItemModal
-            item={item}
-          />
+          <ItemModal item={item} />
         </div>
       );
     }
@@ -64,8 +64,11 @@ export default class PopularProducts extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <div className="border pink">
+          <PandaMart /> <br></br>
+          in 20 minutes
+        </div>
         <div className="border">
-          <h1 className="text-center">pandamart (RedHill)</h1>
           <h2>
             <b>Popular Products</b>
           </h2>
