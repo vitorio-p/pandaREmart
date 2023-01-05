@@ -8,6 +8,10 @@
   color: white;
 }
 
+.pinkFont {
+  color: #E21B70;
+}
+
 .d-flex{
   gap:10px;
 }
