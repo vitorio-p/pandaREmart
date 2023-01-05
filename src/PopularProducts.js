@@ -1,7 +1,9 @@
 import React from "react";
+import ItemModal from "./ItemModal";
 import "./styles.css";
 import milkImage from "./img/meiji-2l-milk.png";
 import eggImage from "./img/dasoon-eggs.webp";
+import breadImage from "./img/bread.jpeg";
 
 export default class PopularProducts extends React.Component {
   state = {
@@ -18,6 +20,12 @@ export default class PopularProducts extends React.Component {
         price: 7,
         image: milkImage,
       },
+      {
+        id: 3,
+        name: "Gardenia Jumbo 600 Enriched White Bread",
+        price: 3,
+        image: breadImage,
+      },
     ],
   };
 
@@ -32,6 +40,7 @@ export default class PopularProducts extends React.Component {
           style={{
             width: 13 + "rem",
           }}
+          onClick={ItemModal}
         >
           <img
             src={item.image}
@@ -42,6 +51,9 @@ export default class PopularProducts extends React.Component {
             <h5 className="card-title">S$ {item.price}</h5>
             <h6 className="card-text">{item.name}</h6>
           </div>
+          <ItemModal
+            item={item}
+          />
         </div>
       );
     }
@@ -54,11 +66,10 @@ export default class PopularProducts extends React.Component {
       <React.Fragment>
         <div className="border">
           <h1 className="text-center">pandamart (RedHill)</h1>
-          <h2><b>Popular Products</b></h2>
-          <div className="d-flex p-2">
-            {this.renderItems()}
-          </div>
-          
+          <h2>
+            <b>Popular Products</b>
+          </h2>
+          <div className="d-flex p-2">{this.renderItems()}</div>
         </div>
       </React.Fragment>
     );
