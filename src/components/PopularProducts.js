@@ -1,10 +1,10 @@
 import React from "react";
 import ItemModal from "./ItemModal";
-import "./styles.css";
-import milkImage from "./img/meiji-2l-milk.png";
-import eggImage from "./img/dasoon-eggs.webp";
-import breadImage from "./img/bread.jpeg";
-import {ReactComponent as PandaMart} from './svg/pandamart-white.svg'
+import "../styles.css";
+import milkImage from "../img/meiji-2l-milk.png";
+import eggImage from "../img/dasoon-eggs.webp";
+import breadImage from "../img/bread.jpeg";
+import {ReactComponent as PandaMart} from '../svg/pandamart-white.svg'
 
 
 export default class PopularProducts extends React.Component {
