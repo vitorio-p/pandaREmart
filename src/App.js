@@ -1,18 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavBar from "./NavBar";
-import PopularProducts from "./PopularProducts";
-import DeliveryBar from "./DeliveryBar";
-import CartBar from "./CartBar";
-
+import { Routes, Route } from 'react-router-dom';
+import StoreFront from "./pages/StoreFront";
+import CartPage from "./pages/CartPage";
 
 function App() {
   return (
-    <div className="container">
-      <NavBar />
-      <DeliveryBar />
-      <PopularProducts />
-      <CartBar />
-    </div>
+    <Routes>
+      <Route exact path="/" element={<StoreFront/>} />
+      <Route exact path="/cart" element={<CartPage/>} />
+    </Routes>
   );
 }
 
