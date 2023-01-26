@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ItemModal from "./ItemModal";
 import "../styles.css";
 import milkImage from "../img/meiji-2l-milk.png";
 import eggImage from "../img/dasoon-eggs.webp";
 import breadImage from "../img/bread.jpeg";
-import {ReactComponent as PandaMart} from '../svg/pandamart-white.svg'
-
+import { ReactComponent as AddSVG } from "../svg/ic-add.svg";
+import { ReactComponent as PandaMart } from "../svg/pandamart-white.svg";
 
 export default class PopularProducts extends React.Component {
   state = {
@@ -44,16 +45,20 @@ export default class PopularProducts extends React.Component {
           }}
           onClick={ItemModal}
         >
-          <img
-            src={item.image}
-            className="card-img-top photo mx-auto"
-            alt={item.name}
-          ></img>
+          <Link to="/item/:id">
+            <img
+              src={item.image}
+              className="card-img-top photo mx-auto"
+              alt={item.name}
+            ></img>
+          </Link>
+          <Link to="/cart">
+            <AddSVG className="position-absolute end-0" />
+          </Link>
           <div className="card-body">
             <h5 className="card-title">S$ {item.price}</h5>
             <h6 className="card-text">{item.name}</h6>
           </div>
-          <ItemModal item={item} />
         </div>
       );
     }
