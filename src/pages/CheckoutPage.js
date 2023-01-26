@@ -4,14 +4,17 @@ import NavBar from "../components/NavBar";
 import PopularProducts from "../components/PopularProducts";
 import DeliveryBar from "../components/DeliveryBar";
 import CheckoutBar from "../components/CheckoutBar";
+import DeliveryDetails from "../components/DeliveryDetails";
+import PersonalDetails from "../components/PersonalDetails";
+import PaymentDetails from "../components/PaymentDetails";
 
 export default function CheckoutPage() {
   return (
     <React.Fragment>
       <NavBar />
-      <div>Delivery details</div>
-      <div>Personal details</div>
-      <div>Payment</div>
+      <DeliveryDetails />
+      <PersonalDetails />
+      <PaymentDetails />
       <div>Cart details</div>
       <DeliveryBar />
       <PopularProducts />
