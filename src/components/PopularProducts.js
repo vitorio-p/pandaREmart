@@ -53,7 +53,7 @@ export default class PopularProducts extends React.Component {
             ></img>
           </Link>
           <Link to="/cart">
-            <AddSVG className="position-absolute end-0" />
+            <AddSVG className="plusButton" />
           </Link>
           <div className="card-body">
             <h5 className="card-title">S$ {item.price}</h5>
@@ -69,11 +69,11 @@ export default class PopularProducts extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="border pink">
+        <div className="border pink px-2">
           <PandaMart /> <br></br>
           in 20 minutes
         </div>
-        <div className="border">
+        <div className="px-2">
           <h2>
             <b>Popular Products</b>
           </h2>
