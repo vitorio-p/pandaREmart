@@ -9,15 +9,13 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar bg-white border">
-          <div className="container-fluid">
-            <UserSVG />
-            <FoodpandaLogoSVG />
-            <LikedSVG />
-            <Link to="/cart">
-              <CartSVG />
-            </Link>
-          </div>
+        <nav className="navbar container-fluid border px-2">
+          <UserSVG />
+          <FoodpandaLogoSVG />
+          <LikedSVG />
+          <Link to="/cart">
+            <CartSVG />
+          </Link>
         </nav>
       </React.Fragment>
     );
