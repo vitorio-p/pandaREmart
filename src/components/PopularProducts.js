@@ -39,7 +39,7 @@ export default class PopularProducts extends React.Component {
       jsx.push(
         <div
           key={item.id}
-          className="card mb-3"
+          className="card"
           style={{
             width: 13 + "rem",
           }}
@@ -48,7 +48,7 @@ export default class PopularProducts extends React.Component {
           <Link to="/item/:id">
             <img
               src={item.image}
-              className="card-img-top photo mx-auto"
+              className="card-img-top"
               alt={item.name}
             ></img>
           </Link>
@@ -77,7 +77,7 @@ export default class PopularProducts extends React.Component {
           <h2>
             <b>Popular Products</b>
           </h2>
-          <div className="d-flex p-2">{this.renderItems()}</div>
+          <div className="d-flex">{this.renderItems()}</div>
         </div>
       </React.Fragment>
     );
