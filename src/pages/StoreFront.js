@@ -11,7 +11,7 @@ export default function StoreFront() {
       <NavBar />
       <DeliveryBar />
       <PopularProducts />
-      <Link to="/cart" style={{ textDecoration: 'none' }}>
+      <Link to="/cart" style={{ textDecoration: "none" }}>
         <CartBar />
       </Link>
     </React.Fragment>
