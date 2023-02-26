@@ -7,7 +7,7 @@ export default class CartBar extends React.Component {
     return (
       <React.Fragment>
         <div className="fixed-bottom">
-          <div className="d-grid px-2">
+          <div className="d-grid paddingU">
             <button className="btn pink" onClick={ViewCart}>
               <WhiteCartSVG />
               <span>View Cart</span>
