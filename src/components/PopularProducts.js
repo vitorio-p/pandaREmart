@@ -40,9 +40,6 @@ export default class PopularProducts extends React.Component {
         <div
           key={item.id}
           className="card"
-          style={{
-            width: 13 + "rem",
-          }}
           onClick={ItemModal}
         >
           <Link to="/item/:id">
