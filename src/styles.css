@@ -1,6 +1,10 @@
-.photo {
-  height: 200px;
-  width: 200px;
+.card-img-top {
+  height: 100%;
+  width: 100%;
+}
+
+.card {
+  width: 163px;
 }
 
 .pink {
@@ -37,4 +41,15 @@
   border-color: #e21b70;
   border: none;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='4' fill='rgba(255,255,255,1.0)'/></svg>");
+}
+
+.paddingU {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.plusButton {
+  position: absolute;
+  right: 5px;
 }

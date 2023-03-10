@@ -39,21 +39,18 @@ export default class PopularProducts extends React.Component {
       jsx.push(
         <div
           key={item.id}
-          className="card mb-3"
-          style={{
-            width: 13 + "rem",
-          }}
+          className="card"
           onClick={ItemModal}
         >
           <Link to="/item/:id">
             <img
               src={item.image}
-              className="card-img-top photo mx-auto"
+              className="card-img-top"
               alt={item.name}
             ></img>
           </Link>
           <Link to="/cart">
-            <AddSVG className="position-absolute end-0" />
+            <AddSVG className="plusButton" />
           </Link>
           <div className="card-body">
             <h5 className="card-title">S$ {item.price}</h5>
@@ -69,15 +66,15 @@ export default class PopularProducts extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="border pink">
+        <div className="border pink px-2">
           <PandaMart /> <br></br>
           in 20 minutes
         </div>
-        <div className="border">
+        <div className="px-2">
           <h2>
             <b>Popular Products</b>
           </h2>
-          <div className="d-flex p-2">{this.renderItems()}</div>
+          <div className="d-flex">{this.renderItems()}</div>
         </div>
       </React.Fragment>
     );
