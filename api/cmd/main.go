@@ -1,79 +1,163 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
-	"net/http"
+	"fmt"
 	"os"
-	"path/filepath"
-	"time"
 
-	"github.com/gorilla/mux"
-	"github.com/vitorio-p/pandaREmart/pkg/config"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
+	"go.mod/controllers"
+	"go.mod/infrastructure"
+	"go.mod/middlewares"
+	"go.mod/models"
+	"go.mod/seeds"
 )
 
-// spaHandler implements the http.Handler interface, so we can use it
-// to respond to HTTP requests. The path to the static directory and
-// path to the index file within that static directory are used to
-// serve the SPA in the given static directory.
-type spaHandler struct {
-	staticPath string
-	indexPath  string
+func drop(db *gorm.DB) {
+	db.DropTableIfExists(
+		&models.FileUpload{},
+		&models.Comment{},
+		&models.OrderItem{}, &models.Order{}, &models.Address{},
+		&models.ProductCategory{}, &models.ProductTag{},
+		&models.Tag{}, &models.Category{},
+		&models.Product{},
+		&models.UserRole{}, &models.Role{}, &models.User{})
+}
+
+func migrate(database *gorm.DB) {
+
+	database.AutoMigrate(&models.Address{})
+
+	database.AutoMigrate(&models.Category{})
+	database.AutoMigrate(&models.Comment{})
+
+	database.AutoMigrate(&models.Order{})
+	database.AutoMigrate(&models.OrderItem{})
+
+	database.AutoMigrate(&models.Product{})
+	database.AutoMigrate(&models.ProductCategory{})
+
+	database.AutoMigrate(&models.Role{})
+	database.AutoMigrate(&models.UserRole{})
+
+	database.AutoMigrate(&models.Tag{})
+	database.AutoMigrate(&models.ProductTag{})
+
+	database.AutoMigrate(&models.User{})
+
+	database.AutoMigrate(&models.FileUpload{})
+}
+
+func addDbConstraints(database *gorm.DB) {
+	// TODO: it is well known GORM does not add foreign keys even after using ForeignKey in struct, but, why manually does not work neither ?
+
+	dialect := database.Dialect().GetName() // mysql, sqlite3
+	if dialect != "sqlite3" {
+		database.Model(&models.Comment{}).AddForeignKey("product_id", "products(id)", "CASCADE", "CASCADE")
+		database.Model(&models.Comment{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+
+		database.Model(&models.Order{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+		database.Model(&models.Order{}).AddForeignKey("address_id", "addresses(id)", "CASCADE", "CASCADE")
+		database.Model(&models.OrderItem{}).AddForeignKey("order_id", "orders(id)", "CASCADE", "CASCADE")
+		database.Model(&models.OrderItem{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+
+		database.Model(&models.Address{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+
+		database.Model(&models.UserRole{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+		database.Model(&models.UserRole{}).AddForeignKey("role_id", "roles(id)", "CASCADE", "CASCADE")
+
+		database.Table("products_tags").AddForeignKey("product_id", "products(id)", "CASCADE", "CASCADE")
+		database.Table("products_tags").AddForeignKey("tag_id", "tags(id)", "CASCADE", "CASCADE")
+
+		database.Model(models.ProductCategory{}).AddForeignKey("product_id", "products(id)", "CASCADE", "CASCADE")
+		database.Model(models.ProductCategory{}).AddForeignKey("category_id", "categories(id)", "CASCADE", "CASCADE")
+	} else if dialect == "sqlite3" {
+		database.Table("comments").AddIndex("comments__idx_product_id", "product_id")
+		database.Table("comments").AddIndex("comments__idx_user_id", "user_id")
+
+		database.Table("ratings").AddIndex("ratings__idx_user_id", "user_id")
+		database.Table("ratings").AddIndex("ratings__idx_product_id", "product_id")
+
+		database.Model(&models.Comment{}).AddIndex("comments__idx_created_at", "created_at")
+
+	}
+
+	database.Model(&models.UserRole{}).AddIndex("user_roles__idx_user_id", "user_id")
+	database.Table("products_tags").AddIndex("products_tags__idx_product_id", "product_id")
+}
+func create(database *gorm.DB) {
+	drop(database)
+	migrate(database)
+	addDbConstraints(database)
 }
 
 func main() {
-	router := mux.NewRouter()
 
-	router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
-		// an example API handler
-		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
-	})
-
-	spa := spaHandler{staticPath: "build", indexPath: "index.html"}
-	router.PathPrefix("/").Handler(spa)
-
-	srv := &http.Server{
-		Handler: router,
-		Addr:    "127.0.0.1:8080",
-		// Good practice: enforce timeouts for servers you create!
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
+	e := godotenv.Load() //Load .env file
+	if e != nil {
+		fmt.Print(e)
 	}
-	log.Fatal(srv.ListenAndServe())
+	println(os.Getenv("DB_DIALECT"))
 
-	config.Connect()
-}
+	database := infrastructure.OpenDbConnection()
 
-// ServeHTTP inspects the URL path to locate a file within the static dir
-// on the SPA handler. If a file is found, it will be served. If not, the
-// file located at the index path on the SPA handler will be served. This
-// is suitable behavior for serving an SPA (single page application).
-func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// get the absolute path to prevent directory traversal
-	path, err := filepath.Abs(r.URL.Path)
-	if err != nil {
-		// if we failed to get the absolute path respond with a 400 bad request
-		// and stop
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
+	defer database.Close()
+	args := os.Args
+	if len(args) > 1 {
+		first := args[1]
+		second := ""
+		if len(args) > 2 {
+			second = args[2]
+		}
 
-	// prepend the path with the path to the static directory
-	path = filepath.Join(h.staticPath, path)
+		if first == "create" {
+			create(database)
+		} else if first == "seed" {
+			seeds.Seed()
+			os.Exit(0)
+		} else if first == "migrate" {
+			migrate(database)
+		}
 
-	// check whether a file exists at the given path
-	_, err = os.Stat(path)
-	if os.IsNotExist(err) {
-		// file does not exist, serve index.html
-		http.ServeFile(w, r, filepath.Join(h.staticPath, h.indexPath))
-		return
-	} else if err != nil {
-		// if we got an error (that wasn't that the file doesn't exist) stating the
-		// file, return a 500 internal server error and stop
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		if second == "seed" {
+			seeds.Seed()
+			os.Exit(0)
+		} else if first == "migrate" {
+			migrate(database)
+		}
+
+		if first != "" && second == "" {
+			os.Exit(0)
+		}
 	}
 
-	// otherwise, use http.FileServer to serve the static dir
-	http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
+	migrate(database)
+
+	// gin.New() - new gin Instance with no middlewares
+	// goGonicEngine.Use(gin.Logger())
+	// goGonicEngine.Use(gin.Recovery())
+	goGonicEngine := gin.Default() // gin with the Logger and Recovery Middlewares attached
+	// Allow all Origins
+	goGonicEngine.Use(cors.Default())
+
+	goGonicEngine.Use(middlewares.Benchmark())
+
+	// goGonicEngine.Use(middlewares.Cors())
+
+	goGonicEngine.Use(middlewares.UserLoaderMiddleware())
+	goGonicEngine.Static("/static", "./static")
+	apiRouteGroup := goGonicEngine.Group("/api")
+
+	controllers.RegisterUserRoutes(apiRouteGroup.Group("/users"))
+	controllers.RegisterProductRoutes(apiRouteGroup.Group("/products"))
+	controllers.RegisterCommentRoutes(apiRouteGroup.Group("/"))
+	controllers.RegisterPageRoutes(apiRouteGroup.Group("/"))
+	controllers.RegisterAddressesRoutes(apiRouteGroup.Group("/users"))
+	controllers.RegisterTagRoutes(apiRouteGroup.Group("/tags"))
+	controllers.RegisterCategoryRoutes(apiRouteGroup.Group("/categories"))
+	controllers.RegisterOrderRoutes(apiRouteGroup.Group("/orders"))
+
+	goGonicEngine.Run(":8080") // listen and serve on 0.0.0.0:8080
 }
