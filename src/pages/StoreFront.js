@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import CartPanel from "../components/CartPanel";
+import DeliveryBar from "../components/DeliveryBar";
 import NavBar from "../components/NavBar";
 import PopularProducts from "../components/PopularProducts";
-import DeliveryBar from "../components/DeliveryBar";
-import CartBar from "../components/CartBar";
 
 export default function StoreFront() {
   return (
@@ -11,9 +10,7 @@ export default function StoreFront() {
       <NavBar />
       <DeliveryBar />
       <PopularProducts />
-      <Link to="/cart" style={{ textDecoration: 'none' }}>
-        <CartBar />
-      </Link>
+      <CartPanel />
     </React.Fragment>
   );
 }

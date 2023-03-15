@@ -1,6 +1,14 @@
-.photo {
-  height: 200px;
-  width: 200px;
+.card-img-top {
+  height: 100%;
+  width: 100%;
+}
+
+.card {
+  width: 163px;
+}
+
+.img {
+  width: 60px;
 }
 
 .pink {
@@ -37,4 +45,69 @@
   border-color: #e21b70;
   border: none;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='4' fill='rgba(255,255,255,1.0)'/></svg>");
+}
+
+.paddingU {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.padding {
+  padding: 0.5rem;
+}
+
+.cart {
+  height: 100vh;
+  width: 40%;
+  float: left;
+  padding: 1rem
+}
+
+.cart-title {
+  text-align: center;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-price {
+  position: relative;
+  right: 0px
+}
+
+.cart-item-quantity {
+  float: right;
+  width: 64px;
+}
+
+.cart-details-subtotal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-details-delivery-fee {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-details-total {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-to-cart {
+  position: absolute;
+  bottom: .3rem;
+  right: 1.5rem;
+  width: 1px;
+  cursor: pointer;
+}
+
+.popular-product {
+  width: 60%;
+  float: left;
 }

@@ -6,11 +6,13 @@ export default class CartBar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="border d-grid">
-          <button className="btn pink" onClick={ViewCart}>
-            <WhiteCartSVG className="position-absolute start-0"/>
-            <span>View Cart</span>
-          </button>
+        <div className="fixed-bottom">
+          <div className="d-grid paddingU">
+            <button className="btn pink" onClick={ViewCart}>
+              <WhiteCartSVG />
+              <span>View Cart</span>
+            </button>
+          </div>
         </div>
       </React.Fragment>
     );
