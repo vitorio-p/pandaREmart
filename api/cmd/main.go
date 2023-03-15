@@ -29,6 +29,7 @@ func drop(db *gorm.DB) {
 func migrate(database *gorm.DB) {
 
 	database.AutoMigrate(&models.Address{})
+	database.AutoMigrate(&models.ReccuringOrder{})
 
 	database.AutoMigrate(&models.Category{})
 	database.AutoMigrate(&models.Comment{})
@@ -88,9 +89,9 @@ func addDbConstraints(database *gorm.DB) {
 	database.Table("products_tags").AddIndex("products_tags__idx_product_id", "product_id")
 }
 func create(database *gorm.DB) {
-	drop(database)
+	// drop(database)
 	migrate(database)
-	addDbConstraints(database)
+	// addDbConstraints(database)
 }
 
 func main() {
