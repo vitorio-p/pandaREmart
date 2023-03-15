@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/vitorio-p/pandaREmart/pkg/config"
 )
 
 // spaHandler implements the http.Handler interface, so we can use it
@@ -39,6 +40,8 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 	log.Fatal(srv.ListenAndServe())
+
+	config.Connect()
 }
 
 // ServeHTTP inspects the URL path to locate a file within the static dir
