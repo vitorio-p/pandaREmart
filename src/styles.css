@@ -7,6 +7,10 @@
   width: 163px;
 }
 
+.img {
+  width: 60px;
+}
+
 .pink {
   background-color: #e21b70;
   color: white;
@@ -49,7 +53,61 @@
   padding-bottom: 0.5rem;
 }
 
-.plusButton {
+.padding {
+  padding: 0.5rem;
+}
+
+.cart {
+  height: 100vh;
+  width: 40%;
+  float: left;
+  padding: 1rem
+}
+
+.cart-title {
+  text-align: center;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-price {
+  position: relative;
+  right: 0px
+}
+
+.cart-item-quantity {
+  float: right;
+  width: 64px;
+}
+
+.cart-details-subtotal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-details-delivery-fee {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-details-total {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-to-cart {
   position: absolute;
-  right: 5px;
+  bottom: .3rem;
+  right: 1.5rem;
+  width: 1px;
+  cursor: pointer;
+}
+
+.popular-product {
+  width: 60%;
+  float: left;
 }
