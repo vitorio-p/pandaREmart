@@ -153,10 +153,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.25rem;
 }
 
 .side-by-side {
   display: flex;
   justify-content: space-between;
   width: 50%;
+}
+
+.dropdown {
+  width: 50%
 }

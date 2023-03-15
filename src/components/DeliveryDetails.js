@@ -110,9 +110,18 @@ export default function DeliveryDetails() {
             <input type="time" id="order-time" name="order-time" />
           </div>
 
-          <div>Repeat every</div>
+          <div className="cart-details-item">
+            <div>Repeat:</div>
+            <select className="form-select dropdown">
+              <option selected>Choose one option</option>
+              <option value="1">Every week</option>
+              <option value="2">Every 2 weeks</option>
+              <option value="3">Every 3 weeks</option>
+              <option value="4">Every 4 weeks</option>
+            </select>
+          </div>
 
-          <div>
+          <div className="cart-details-item">
             Ends
             <div className="form-check">
               <input
