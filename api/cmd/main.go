@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/vitorio-p/pandaREmart/pkg/config"
 )
 
 // spaHandler implements the http.Handler interface, so we can use it
@@ -22,7 +23,7 @@ type spaHandler struct {
 
 func main() {
 	router := mux.NewRouter()
-	config.connect()
+
 	router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
 		// an example API handler
 		json.NewEncoder(w).Encode(map[string]bool{"ok": true})
@@ -40,6 +41,7 @@ func main() {
 	}
 	log.Fatal(srv.ListenAndServe())
 
+	config.Connect()
 }
 
 // ServeHTTP inspects the URL path to locate a file within the static dir
