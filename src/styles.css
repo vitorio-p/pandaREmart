@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-.card {
+.item {
   width: 163px;
 }
 
@@ -22,6 +22,11 @@
 
 .d-flex {
   gap: 10px;
+}
+
+.navbar {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .form-switch .form-check-input {
@@ -57,11 +62,12 @@
   padding: 0.5rem;
 }
 
+/* StoreFront Page */
 .cart {
   height: 100vh;
   width: 40%;
   float: left;
-  padding: 1rem
+  padding: 1rem;
 }
 
 .cart-title {
@@ -76,7 +82,7 @@
 
 .cart-item-price {
   position: relative;
-  right: 0px
+  right: 0px;
 }
 
 .cart-item-quantity {
@@ -101,7 +107,7 @@
 
 .add-to-cart {
   position: absolute;
-  bottom: .3rem;
+  bottom: 0.3rem;
   right: 1.5rem;
   width: 1px;
   cursor: pointer;
@@ -110,4 +116,52 @@
 .popular-product {
   width: 60%;
   float: left;
+}
+
+/* Checkout Page */
+.checkout {
+  display: grid;
+  justify-content: center;
+}
+
+.checkout-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  width: 654px;
+}
+
+.payment-method {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.25rem;
+}
+
+.radio-pink:checked {
+  background-color: #e21b70;
+  border: none;
+}
+
+.checkbox-pink:checked {
+  background-color: #e21b70;
+  border: none;
+}
+
+.cart-details-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.side-by-side {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.dropdown {
+  width: 50%
 }

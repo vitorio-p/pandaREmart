@@ -1,26 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavBar from "../components/NavBar";
-import PopularProducts from "../components/PopularProducts";
-import DeliveryBar from "../components/DeliveryBar";
-import CheckoutBar from "../components/CheckoutBar";
 import DeliveryDetails from "../components/DeliveryDetails";
-import PersonalDetails from "../components/PersonalDetails";
+import NavBar from "../components/NavBar";
 import PaymentDetails from "../components/PaymentDetails";
+import PersonalDetails from "../components/PersonalDetails";
+import CartDetails from "../components/CartDetails"
 
 export default function CheckoutPage() {
   return (
     <React.Fragment>
       <NavBar />
-      <DeliveryDetails />
-      <PersonalDetails />
-      <PaymentDetails />
-      <div>Cart details</div>
-      <DeliveryBar />
-      <PopularProducts />
-      <Link to="/checkout" style={{ textDecoration: "none" }}>
-        <CheckoutBar />
-      </Link>
+      <div className="checkout">
+        <CartDetails />
+        <DeliveryDetails />
+        <PersonalDetails />
+        <PaymentDetails />
+        <Link
+          className="d-grid mt-2"
+          to="/ordertrackingpage"
+          style={{ textDecoration: "none" }}
+        >
+          <button className="padding btn pink">Place order</button>
+        </Link>
+      </div>
     </React.Fragment>
   );
 }

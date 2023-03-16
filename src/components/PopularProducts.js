@@ -37,7 +37,7 @@ export default class PopularProducts extends React.Component {
 
     for (let item of this.state.items) {
       jsx.push(
-        <div key={item.id} className="card" onClick={ItemModal}>
+        <div key={item.id} className="card item" onClick={ItemModal}>
           <Link to="/item/:id">
             <img src={item.image} className="card-img-top" alt={item.name} />
           </Link>
