@@ -3,7 +3,7 @@ import React from "react";
 export default function PersonalDetails() {
   let name = "Vitorio Pandinata";
   let email = "vp@gmail.com";
-  let phone = "+65 88160390";
+  let phone = "+65 88888888";
 
   return (
     <React.Fragment>
