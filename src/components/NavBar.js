@@ -10,7 +10,9 @@ export default class NavBar extends React.Component {
       <React.Fragment>
         <nav className="navbar container-fluid px-2 position-relative">
           <UserSVG />
-          <FoodpandaLogoSVG className="position-absolute start-50 translate-middle-x" />
+          <Link to="/">
+            <FoodpandaLogoSVG className="position-absolute start-50 translate-middle-x" />
+          </Link>
           <Link to="/cart">
             <img src={cartLogo} alt="cart" />
           </Link>
