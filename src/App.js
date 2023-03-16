@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
+import RecurringOrderPage from "./pages/RecurringOrderPage";
 import StoreFront from "./pages/StoreFront";
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
       <Route exact path="/" element={<StoreFront />} />
       <Route exact path="/cart" element={<CartPage />} />
       <Route exact path="/checkout" element={<CheckoutPage />} />
-      <Route exact path="/ordertrackingpage" element={<OrderTrackingPage />} />
+      <Route exact path="/order-tracking" element={<OrderTrackingPage />} />
+      <Route exact path="/recurring-order" element={<RecurringOrderPage />} />
     </Routes>
   );
 }

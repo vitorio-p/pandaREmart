@@ -13,6 +13,9 @@ export default function OrderTrackingComponent() {
         <h4>23 Mar 2023</h4>
         <div>Next delivery time</div>
         <h4>4:00 PM</h4>
+        <Link to="/recurring-order">
+          <button className="btn pink">Check recurring orders</button>
+        </Link>
         <Link to="/">
           <button className="btn pink">Edit cart</button>
         </Link>
