@@ -186,8 +186,8 @@
   width: 654px;
 }
 
-/* Recurring Order Page */
-.rop {
+/* User Page */
+.user-page {
   display: grid;
   justify-content: center;
 }

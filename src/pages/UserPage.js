@@ -7,7 +7,7 @@ export default function UserPage() {
   return (
     <React.Fragment>
       <NavBar />
-      <div className="otp">
+      <div className="user-page">
         <PersonalDetails />
         <RecurringOrderComponent />
       </div>
