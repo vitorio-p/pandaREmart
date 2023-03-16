@@ -17,7 +17,7 @@ export default function CheckoutPage() {
         <PaymentDetails />
         <Link
           className="d-grid mt-2"
-          to="/ordertrackingpage"
+          to="/order-tracking"
           style={{ textDecoration: "none" }}
         >
           <button className="padding btn pink">Place order</button>

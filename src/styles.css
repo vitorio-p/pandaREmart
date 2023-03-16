@@ -168,7 +168,7 @@
 }
 
 .dropdown {
-  width: 50%
+  width: 50%;
 }
 
 /* OTP */
@@ -176,6 +176,7 @@
   display: grid;
   justify-content: center;
 }
+
 .otp-component {
   display: flex;
   justify-content: center;
@@ -183,4 +184,24 @@
   padding: 0.75rem;
   margin-top: 0.75rem;
   width: 654px;
+}
+
+/* Recurring Order Page */
+.rop {
+  display: grid;
+  justify-content: center;
+}
+
+.rop-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  width: 654px;
+}
+
+.table {
+  text-align: center;
+  vertical-align: middle;
 }
