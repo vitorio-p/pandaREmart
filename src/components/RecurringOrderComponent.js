@@ -5,7 +5,7 @@ export default function RecurringOrderComponent() {
   return (
     <React.Fragment>
       <div className="card rop-component">
-        <h3>Recurring Order</h3>
+        <h3>Recurring order</h3>
         <table class="table table-striped">
           <thead>
             <tr>
