@@ -1,18 +1,17 @@
 import React from "react";
 
 export default function PersonalDetails() {
-  let name = "Vitorio Pandinata";
-  let email = "vp@gmail.com";
-  let phone = "+65 88160390";
+
+let name = "Vitorio Pandinata"
+let email = "vp@gmail.com"
+let phone = "+65 88160390"
 
   return (
     <React.Fragment>
-      <div className="card checkout-page">
-        <h3>Personal details</h3>
-        <div>{name}</div>
-        <div>{email}</div>
-        <div>{phone}</div>
-      </div>
+      <h1>Personal details</h1>
+      <h6>{name}</h6>
+      <h6>{email}</h6>
+      <h6>{phone}</h6>
     </React.Fragment>
   );
 }

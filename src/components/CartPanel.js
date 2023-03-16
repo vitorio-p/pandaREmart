@@ -136,7 +136,7 @@ export default function CartPanel() {
           </div>
           <Link
             className="d-grid padding mt-1"
-            to="/checkout"
+            to="/cart"
             style={{ textDecoration: "none" }}
           >
             <button className="padding btn pink">Submit order</button>
