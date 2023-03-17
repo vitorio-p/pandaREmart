@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
@@ -29,9 +30,9 @@ import (
 func migrate(database *gorm.DB) {
 
 	database.AutoMigrate(&models.Address{})
-	database.AutoMigrate(&models.ReccuringOrder{}, &models.Items{})
-	database.AutoMigrate(&models.CurrentOrder{})
-	database.AutoMigrate(&models.Items{})
+	// database.AutoMigrate(&models.ReccuringOrder{}, &models.Items{})
+	// database.AutoMigrate(&models.CurrentOrder{})
+	// database.AutoMigrate(&models.Items{})
 
 	database.AutoMigrate(&models.Category{})
 	database.AutoMigrate(&models.Comment{})
@@ -102,7 +103,6 @@ func main() {
 	if e != nil {
 		fmt.Print(e)
 	}
-	println(os.Getenv("DB_DIALECT"))
 
 	database := infrastructure.OpenDbConnection()
 
@@ -138,19 +138,20 @@ func main() {
 
 	migrate(database)
 
-	// gin.New() - new gin Instance with no middlewares
-	// goGonicEngine.Use(gin.Logger())
-	// goGonicEngine.Use(gin.Recovery())
+	gin.New() // - new gin Instance with no middlewares
+
 	goGonicEngine := gin.Default() // gin with the Logger and Recovery Middlewares attached
+	goGonicEngine.Use(gin.Logger())
+	goGonicEngine.Use(gin.Recovery())
 	// Allow all Origins
 	goGonicEngine.Use(cors.Default())
 
 	goGonicEngine.Use(middlewares.Benchmark())
 
-	// goGonicEngine.Use(middlewares.Cors())
+	goGonicEngine.Use(middlewares.Cors())
 
 	goGonicEngine.Use(middlewares.UserLoaderMiddleware())
-	goGonicEngine.Static("/static", "./static")
+	goGonicEngine.Use(static.Serve("/", static.LocalFile("./build", true)))
 	apiRouteGroup := goGonicEngine.Group("/api")
 
 	controllers.RegisterUserRoutes(apiRouteGroup.Group("/users"))
