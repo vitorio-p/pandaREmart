@@ -10,14 +10,14 @@ export default function CartPanel() {
   const state = {
     items: [
       {
-        id: 1,
+        id: 0,
         name: "Dasoon Premium Fresh Egg 15S",
         price: 5,
         image: eggImage,
         quantity: 0,
       },
       {
-        id: 2,
+        id: 1,
         name: "Meiji Fresh Milk 2L",
         price: 7,
         image: milkImage,
@@ -31,11 +31,10 @@ export default function CartPanel() {
 
   function renderItems(state) {
     let jsx = [];
-    let id = 0;
 
     for (let item of state.items) {
       jsx.push(
-        <div className="cart-box padding mb-4" id={id}>
+        <div className="cart-box padding mb-4" id={item.id}>
           <div className="cart-item mb-2">
             <img className="img" src={item.image} alt="egg" />
             <div>{item.name}</div>
@@ -44,7 +43,7 @@ export default function CartPanel() {
           <div className="cart-item-quantity">
             <img
               className="cart-remove"
-              id={id}
+              id={item.id}
               src={rubbishbinImage}
               alt="rubbish bin"
               onClick={deleteItem}
@@ -53,14 +52,14 @@ export default function CartPanel() {
               <img
                 className="padding"
                 src={subtractImage}
-                id={id}
+                id={item.id}
                 alt="subtract button"
                 onClick={subtractOne}
               />
               <input
                 className="cart-item-input"
                 type="number"
-                id={id}
+                id={item.id}
                 name="quantity"
                 defaultValue={1}
                 onChange={updatePrices}
@@ -68,7 +67,7 @@ export default function CartPanel() {
               <img
                 className="padding"
                 src={addImage}
-                id={id}
+                id={item.id}
                 alt="add button"
                 onClick={addOne}
               />
@@ -76,38 +75,48 @@ export default function CartPanel() {
           </div>
         </div>
       );
-      id++;
     }
     return jsx;
   }
 
   function deleteItem(item) {
     const idToBeDeleted = item.target.id;
-    const itemToBeDeleted =
-      document.getElementsByClassName("cart-box")[idToBeDeleted];
-    itemToBeDeleted.remove();
+    const itemToBeDeleted = document.getElementsByClassName("cart-box");
+    for (let i = 0; i < itemToBeDeleted.length; i++) {
+      if (itemToBeDeleted[i].id === idToBeDeleted) {
+        itemToBeDeleted[i].remove();
+      }
+    }
   }
 
   function addOne(item) {
     const idToBeAdded = item.target.id;
-    const inputBox =
-      document.getElementsByClassName("cart-item-input")[idToBeAdded];
-    inputBox.value++;
+    const inputBox = document.getElementsByClassName("cart-item-input");
+    console.log("inputbox", inputBox)
+    for (let i = 0; i < 10; i++) {
+      if (inputBox[i].id === idToBeAdded) {
+        inputBox[i].value++;
+      }
+    }
   }
 
   function subtractOne(item) {
-    console.log("minus", item);
     const idToBeSubtracted = item.target.id;
-    const inputBox =
-      document.getElementsByClassName("cart-item-input")[idToBeSubtracted];
-    inputBox.value--;
-    if (inputBox.value < 1) {
-      deleteItem(item);
+    const inputBox = document.getElementsByClassName("cart-item-input");
+    for (let i = 0; i < 10; i++) {
+      if (inputBox[i].id === idToBeSubtracted) {
+        inputBox[i].value--;
+      }
+      if (inputBox[i].value < 1) {
+        deleteItem(item);
+      }
     }
   }
 
   function updatePrices() {
+    console.log('updating prices')
     let cartContent = document.getElementsByClassName("cart-content")[0];
+    console.log('cartcontent', cartContent)
     let cartBoxes = cartContent.getElementsByClassName("cart-box");
     let total = 0;
     for (let i = 0; i < cartBoxes.length; i++) {
