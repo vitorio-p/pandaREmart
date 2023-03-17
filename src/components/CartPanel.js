@@ -1,7 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import eggImage from "../img/dasoon-eggs.webp";
 import milkImage from "../img/meiji-2l-milk.png";
-import { Link } from "react-router-dom";
+import addImage from "../svg/add.svg";
+import rubbishbinImage from "../svg/rubbish-bin.svg";
+import subtractImage from "../svg/subtract.svg";
 
 export default function CartPanel() {
   const state = {
@@ -28,24 +31,49 @@ export default function CartPanel() {
 
   function renderItems(state) {
     let jsx = [];
-    let id = 1;
+    let id = 0;
 
     for (let item of state.items) {
       jsx.push(
         <div className="cart-box padding mb-4" id={id}>
-          <div className="cart-item">
+          <div className="cart-item mb-2">
             <img className="img" src={item.image} alt="egg" />
             <div>{item.name}</div>
             <div className="cart-item-price">S$ {item.price}</div>
           </div>
-          <input
-            className="cart-item-quantity"
-            type="number"
-            id="quantity"
-            name="quantity"
-            placeholder="1"
-            min="0"
-          ></input>
+          <div className="cart-item-quantity">
+            <img
+              className="cart-remove"
+              id={id}
+              src={rubbishbinImage}
+              alt="rubbish bin"
+              onClick={deleteItem}
+            />
+            <div className="cart-item-numbers">
+              <img
+                className="padding"
+                src={subtractImage}
+                id={id}
+                alt="subtract button"
+                onClick={subtractOne}
+              />
+              <input
+                className="cart-item-input"
+                type="number"
+                id={id}
+                name="quantity"
+                defaultValue={1}
+                onChange={updatePrices}
+              ></input>
+              <img
+                className="padding"
+                src={addImage}
+                id={id}
+                alt="add button"
+                onClick={addOne}
+              />
+            </div>
+          </div>
         </div>
       );
       id++;
@@ -53,34 +81,32 @@ export default function CartPanel() {
     return jsx;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ready);
-  } else {
-    ready();
+  function deleteItem(item) {
+    const idToBeDeleted = item.target.id;
+    const itemToBeDeleted =
+      document.getElementsByClassName("cart-box")[idToBeDeleted];
+    itemToBeDeleted.remove();
   }
 
-  // window.onload = () => ready();
+  function addOne(item) {
+    const idToBeAdded = item.target.id;
+    const inputBox =
+      document.getElementsByClassName("cart-item-input")[idToBeAdded];
+    inputBox.value++;
+  }
 
-  function ready() {
-    const removeCartButton = document.getElementsByClassName("cart-remove");
-    for (let i = 0; i < removeCartButton.length; i++) {
-      let button = removeCartButton[i];
-      button.addEventListener("click", removeCartItem);
+  function subtractOne(item) {
+    console.log("minus", item);
+    const idToBeSubtracted = item.target.id;
+    const inputBox =
+      document.getElementsByClassName("cart-item-input")[idToBeSubtracted];
+    inputBox.value--;
+    if (inputBox.value < 1) {
+      deleteItem(item);
     }
-    // Quantity changes
-    let quantityInputs = document.getElementsByClassName("cart-item-quantity");
-    for (let i = 0; i < quantityInputs.length; i++) {
-      let input = quantityInputs[i];
-      input.addEventListener("change", updateTotal);
-    }
   }
 
-  function removeCartItem(event) {
-    let buttonClicked = event.target;
-    buttonClicked.parentElement.remove();
-  }
-
-  function updateTotal() {
+  function updatePrices() {
     let cartContent = document.getElementsByClassName("cart-content")[0];
     let cartBoxes = cartContent.getElementsByClassName("cart-box");
     let total = 0;

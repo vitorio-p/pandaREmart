@@ -91,8 +91,22 @@
 }
 
 .cart-item-quantity {
-  float: right;
-  width: 64px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-item-numbers {
+  margin-left: 20px;
+}
+
+.cart-item-input {
+  width: 40px;
+  text-align: center;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .cart-details-subtotal {
