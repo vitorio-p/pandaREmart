@@ -137,6 +137,14 @@ input::-webkit-inner-spin-button {
   float: left;
 }
 
+.inline {
+  display: inline-block;
+}
+
+.margin-left {
+  margin-left: 0.25rem;
+}
+
 /* Checkout Page */
 .checkout {
   display: grid;

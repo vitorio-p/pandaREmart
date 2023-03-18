@@ -86,6 +86,7 @@ export default function CartPanel() {
       if (cartItem.id === idToBeDeleted) {
         cartItem.remove();
       }
+      updatePrices();
     }
   }
 
@@ -96,6 +97,7 @@ export default function CartPanel() {
       if (cartItem.id === idToBeAdded) {
         cartItem.value++;
       }
+      updatePrices();
     }
   }
 
@@ -109,34 +111,55 @@ export default function CartPanel() {
       if (cartItem.value < 1) {
         deleteItem(item);
       }
+      updatePrices();
     }
   }
 
   function updatePrices() {
-    console.log("updating prices");
-    let cartContent = document.getElementsByClassName("cart-content")[0];
-    console.log("cartcontent", cartContent);
-    let cartBoxes = cartContent.getElementsByClassName("cart-box");
-    let total = 0;
-    for (let i = 0; i < cartBoxes.length; i++) {
-      let cartBox = cartBoxes[i];
-      let priceElement = cartBox.getElementsByClassName("cart-item-price")[0];
-      let priceElementString = priceElement.innerHTML;
-      let price = Number(
-        priceElementString.substring(priceElementString.indexOf(" ") + 1)
+    // get the prices of all the items in the cart
+    let cartPrices = document.getElementsByClassName("cart-item-price");
+    let cartItemPrices = [];
+    for (let cartItem of cartPrices) {
+      let cartItemPriceHTML = cartItem.innerHTML;
+      let cartItemPrice = cartItemPriceHTML.substring(
+        cartItemPriceHTML.indexOf(" ") + 1
       );
-      let quantityElement =
-        cartBox.getElementsByClassName("cart-item-quantity")[0];
-      let quantity = quantityElement.value;
-      total = total + price * quantity;
+      cartItemPrices.push(Number(cartItemPrice));
     }
-    // Update subtotal and total
-    let subTotal = document.getElementsByClassName(
+
+    // get the quantity of all the items in the cart
+    const inputBoxes = document.getElementsByClassName("cart-item-input");
+    const cartItemQuantities = [];
+    for (let cartItem of inputBoxes) {
+      cartItemQuantities.push(cartItem.value);
+    }
+
+    // calculate subtotal
+    let subtotal = 0;
+    for (let i = 0; i < cartItemPrices.length; i++) {
+      subtotal += cartItemPrices[i] * cartItemQuantities[i];
+    }
+
+    // calculate total
+    let deliveryCost = 0;
+    if (subtotal === 0) {
+      deliveryCost = 0;
+      let deliveryCostHTML = document.getElementsByClassName(
+        "cart-details-delivery-fee-money"
+      )[0];
+      deliveryCostHTML.innerHTML = 0;
+    } else {
+      deliveryCost = state.others.deliveryFee;
+    }
+    let total = subtotal + deliveryCost;
+
+    // update subtotal and total
+    let subTotalHTML = document.getElementsByClassName(
       "cart-details-subtotal-value"
     )[0];
-    subTotal.innerHTML = total;
-    let cartTotalValue = document.getElementsByClassName("cart-total-value")[0];
-    cartTotalValue.innerHTML = total + 2;
+    subTotalHTML.innerHTML = subtotal;
+    let totalHTML = document.getElementsByClassName("cart-total-value")[0];
+    totalHTML.innerHTML = total;
   }
 
   return (
@@ -150,21 +173,31 @@ export default function CartPanel() {
           <div className="cart-details">
             <div className="cart-details-subtotal">
               <div>Subtotal</div>
-              <div className="cart-details-subtotal-value">
-                {state.items[0].price + state.items[1].price}
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-details-subtotal-value inline margin-left">
+                  {state.items[0].price + state.items[1].price}
+                </div>
               </div>
             </div>
-
             <div className="cart-details-delivery-fee mt-1">
-              <div>Delivery fees</div>
-              <div>{state.others.deliveryFee}</div>
+              <div>Delivery fee</div>
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-details-delivery-fee-money inline margin-left">
+                  {state.others.deliveryFee}
+                </div>
+              </div>
             </div>
             <div className="cart-details-total mt-1">
               <div>
                 <b>Total</b>
               </div>
-              <div className="cart-total-value">
-                {state.items[0].price + state.others.deliveryFee}
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-total-value inline margin-left">
+                  {state.items[0].price + state.others.deliveryFee}
+                </div>
               </div>
             </div>
           </div>
