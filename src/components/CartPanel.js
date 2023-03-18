@@ -82,9 +82,9 @@ export default function CartPanel() {
   function deleteItem(item) {
     const idToBeDeleted = item.target.id;
     const itemToBeDeleted = document.getElementsByClassName("cart-box");
-    for (let i = 0; i < itemToBeDeleted.length; i++) {
-      if (itemToBeDeleted[i].id === idToBeDeleted) {
-        itemToBeDeleted[i].remove();
+    for (let cartItem of itemToBeDeleted) {
+      if (cartItem.id === idToBeDeleted) {
+        cartItem.remove();
       }
     }
   }
@@ -92,10 +92,9 @@ export default function CartPanel() {
   function addOne(item) {
     const idToBeAdded = item.target.id;
     const inputBox = document.getElementsByClassName("cart-item-input");
-    console.log("inputbox", inputBox)
-    for (let i = 0; i < 10; i++) {
-      if (inputBox[i].id === idToBeAdded) {
-        inputBox[i].value++;
+    for (let cartItem of inputBox) {
+      if (cartItem.id === idToBeAdded) {
+        cartItem.value++;
       }
     }
   }
@@ -103,20 +102,20 @@ export default function CartPanel() {
   function subtractOne(item) {
     const idToBeSubtracted = item.target.id;
     const inputBox = document.getElementsByClassName("cart-item-input");
-    for (let i = 0; i < 10; i++) {
-      if (inputBox[i].id === idToBeSubtracted) {
-        inputBox[i].value--;
+    for (let cartItem of inputBox) {
+      if (cartItem.id === idToBeSubtracted) {
+        cartItem.value--;
       }
-      if (inputBox[i].value < 1) {
+      if (cartItem.value < 1) {
         deleteItem(item);
       }
     }
   }
 
   function updatePrices() {
-    console.log('updating prices')
+    console.log("updating prices");
     let cartContent = document.getElementsByClassName("cart-content")[0];
-    console.log('cartcontent', cartContent)
+    console.log("cartcontent", cartContent);
     let cartBoxes = cartContent.getElementsByClassName("cart-box");
     let total = 0;
     for (let i = 0; i < cartBoxes.length; i++) {
