@@ -1,20 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import eggImage from "../img/dasoon-eggs.webp";
 import milkImage from "../img/meiji-2l-milk.png";
-import { Link } from "react-router-dom";
+import addImage from "../svg/add.svg";
+import rubbishbinImage from "../svg/rubbish-bin.svg";
+import subtractImage from "../svg/subtract.svg";
 
 export default function CartPanel() {
   const state = {
     items: [
       {
-        id: 1,
+        id: 0,
         name: "Dasoon Premium Fresh Egg 15S",
         price: 5,
         image: eggImage,
         quantity: 0,
       },
       {
-        id: 2,
+        id: 1,
         name: "Meiji Fresh Milk 2L",
         price: 7,
         image: milkImage,
@@ -28,81 +31,135 @@ export default function CartPanel() {
 
   function renderItems(state) {
     let jsx = [];
-    let id = 1;
 
     for (let item of state.items) {
       jsx.push(
-        <div className="cart-box padding mb-4" id={id}>
-          <div className="cart-item">
+        <div className="cart-box padding mb-4" id={item.id}>
+          <div className="cart-item mb-2">
             <img className="img" src={item.image} alt="egg" />
             <div>{item.name}</div>
             <div className="cart-item-price">S$ {item.price}</div>
           </div>
-          <input
-            className="cart-item-quantity"
-            type="number"
-            id="quantity"
-            name="quantity"
-            placeholder="1"
-            min="0"
-          ></input>
+          <div className="cart-item-quantity">
+            <img
+              className="cart-remove"
+              id={item.id}
+              src={rubbishbinImage}
+              alt="rubbish bin"
+              onClick={deleteItem}
+            />
+            <div className="cart-item-numbers">
+              <img
+                className="padding"
+                src={subtractImage}
+                id={item.id}
+                alt="subtract button"
+                onClick={subtractOne}
+              />
+              <input
+                className="cart-item-input"
+                type="number"
+                id={item.id}
+                name="quantity"
+                defaultValue={1}
+                onChange={updatePrices}
+              ></input>
+              <img
+                className="padding"
+                src={addImage}
+                id={item.id}
+                alt="add button"
+                onClick={addOne}
+              />
+            </div>
+          </div>
         </div>
       );
-      id++;
     }
     return jsx;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ready);
-  } else {
-    ready();
-  }
-
-  // window.onload = () => ready();
-
-  function ready() {
-    const removeCartButton = document.getElementsByClassName("cart-remove");
-    for (let i = 0; i < removeCartButton.length; i++) {
-      let button = removeCartButton[i];
-      button.addEventListener("click", removeCartItem);
-    }
-    // Quantity changes
-    let quantityInputs = document.getElementsByClassName("cart-item-quantity");
-    for (let i = 0; i < quantityInputs.length; i++) {
-      let input = quantityInputs[i];
-      input.addEventListener("change", updateTotal);
+  function deleteItem(item) {
+    const idToBeDeleted = item.target.id;
+    const itemToBeDeleted = document.getElementsByClassName("cart-box");
+    for (let cartItem of itemToBeDeleted) {
+      if (cartItem.id === idToBeDeleted) {
+        cartItem.remove();
+      }
+      updatePrices();
     }
   }
 
-  function removeCartItem(event) {
-    let buttonClicked = event.target;
-    buttonClicked.parentElement.remove();
+  function addOne(item) {
+    const idToBeAdded = item.target.id;
+    const inputBox = document.getElementsByClassName("cart-item-input");
+    for (let cartItem of inputBox) {
+      if (cartItem.id === idToBeAdded) {
+        cartItem.value++;
+      }
+      updatePrices();
+    }
   }
 
-  function updateTotal() {
-    let cartContent = document.getElementsByClassName("cart-content")[0];
-    let cartBoxes = cartContent.getElementsByClassName("cart-box");
-    let total = 0;
-    for (let i = 0; i < cartBoxes.length; i++) {
-      let cartBox = cartBoxes[i];
-      let priceElement = cartBox.getElementsByClassName("cart-item-price")[0];
-      let priceElementString = priceElement.innerHTML;
-      let price = Number(
-        priceElementString.substring(priceElementString.indexOf(" ") + 1)
+  function subtractOne(item) {
+    const idToBeSubtracted = item.target.id;
+    const inputBox = document.getElementsByClassName("cart-item-input");
+    for (let cartItem of inputBox) {
+      if (cartItem.id === idToBeSubtracted) {
+        cartItem.value--;
+      }
+      if (cartItem.value < 1) {
+        deleteItem(item);
+      }
+      updatePrices();
+    }
+  }
+
+  function updatePrices() {
+    // get the prices of all the items in the cart
+    let cartPrices = document.getElementsByClassName("cart-item-price");
+    let cartItemPrices = [];
+    for (let cartItem of cartPrices) {
+      let cartItemPriceHTML = cartItem.innerHTML;
+      let cartItemPrice = cartItemPriceHTML.substring(
+        cartItemPriceHTML.indexOf(" ") + 1
       );
-      let quantityElement =
-        cartBox.getElementsByClassName("cart-item-quantity")[0];
-      let quantity = quantityElement.value;
-      total = total + price * quantity;
+      cartItemPrices.push(Number(cartItemPrice));
     }
-    // Update subtotal and total
-    let subTotal = document.getElementsByClassName(
+
+    // get the quantity of all the items in the cart
+    const inputBoxes = document.getElementsByClassName("cart-item-input");
+    const cartItemQuantities = [];
+    for (let cartItem of inputBoxes) {
+      cartItemQuantities.push(cartItem.value);
+    }
+
+    // calculate subtotal
+    let subtotal = 0;
+    for (let i = 0; i < cartItemPrices.length; i++) {
+      subtotal += cartItemPrices[i] * cartItemQuantities[i];
+    }
+
+    // calculate total
+    let deliveryCost = 0;
+    if (subtotal === 0) {
+      deliveryCost = 0;
+      let deliveryCostHTML = document.getElementsByClassName(
+        "cart-details-delivery-fee-money"
+      )[0];
+      deliveryCostHTML.innerHTML = 0;
+    } else {
+      deliveryCost = state.others.deliveryFee;
+    }
+    let total = subtotal + deliveryCost;
+
+    // update subtotal and total
+    let subTotalHTML = document.getElementsByClassName(
       "cart-details-subtotal-value"
     )[0];
-    subTotal.innerHTML = total;
-    let cartTotalValue = document.getElementsByClassName("cart-total-value")[0];
-    cartTotalValue.innerHTML = total + 2;
+    subTotalHTML.innerHTML = subtotal;
+    let totalHTML = document.getElementsByClassName("cart-total-value")[0];
+    totalHTML.innerHTML = total;
   }
 
   return (
@@ -116,21 +173,31 @@ export default function CartPanel() {
           <div className="cart-details">
             <div className="cart-details-subtotal">
               <div>Subtotal</div>
-              <div className="cart-details-subtotal-value">
-                {state.items[0].price + state.items[1].price}
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-details-subtotal-value inline margin-left">
+                  {state.items[0].price + state.items[1].price}
+                </div>
               </div>
             </div>
-
             <div className="cart-details-delivery-fee mt-1">
-              <div>Delivery fees</div>
-              <div>{state.others.deliveryFee}</div>
+              <div>Delivery fee</div>
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-details-delivery-fee-money inline margin-left">
+                  {state.others.deliveryFee}
+                </div>
+              </div>
             </div>
             <div className="cart-details-total mt-1">
               <div>
                 <b>Total</b>
               </div>
-              <div className="cart-total-value">
-                {state.items[0].price + state.others.deliveryFee}
+              <div>
+                <div className="inline">S$</div>
+                <div className="cart-total-value inline margin-left">
+                  {state.items[0].price + state.others.deliveryFee}
+                </div>
               </div>
             </div>
           </div>
