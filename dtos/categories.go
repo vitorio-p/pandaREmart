@@ -6,25 +6,25 @@ import (
 	"go.mod/models"
 )
 
-func CreateCategoryListMapDto(categories []models.Category) map[string]interface{} {
+func CreateCategoryListMap(categories []models.Category) map[string]interface{} {
 	result := map[string]interface{}{}
 	var t = make([]interface{}, len(categories))
 	for i := 0; i < len(categories); i++ {
-		t[i] = CreateCategoryDto(categories[i])
+		t[i] = createCategory(categories[i])
 	}
 	result["categories"] = t
-	return CreateSuccessDto(result)
+	return createSuccess(result)
 }
 
-func CreateCategoryListDto(categories []models.Category) []interface{} {
+func createCategoryList(categories []models.Category) []interface{} {
 	var t = make([]interface{}, len(categories))
 	for i := 0; i < len(categories); i++ {
-		t[i] = CreateCategoryDto(categories[i])
+		t[i] = createCategory(categories[i])
 	}
 	return t
 }
 
-func CreateCategoryDto(category models.Category) map[string]interface{} {
+func createCategory(category models.Category) map[string]interface{} {
 	var imageUrls = make([]string, len(category.Images))
 	replaceAllFlag := -1
 	for i := 0; i < len(category.Images); i++ {
@@ -39,5 +39,5 @@ func CreateCategoryDto(category models.Category) map[string]interface{} {
 }
 
 func CreateCategoryCreatedDto(category models.Category) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(CreateCategoryDto(category), "Category created successfully")
+	return createSuccessWithDtoAndMessageDto(createCategory(category), "Category created successfully")
 }

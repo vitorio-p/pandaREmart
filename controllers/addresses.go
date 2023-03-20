@@ -15,13 +15,13 @@ func RegisterAddressesRoutes(router *gin.RouterGroup) {
 
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.GET("/addresses", ListAddresses)
-		router.POST("/addresses", CreateAddress)
+		router.GET("/addresses", listAddresses)
+		router.POST("/addresses", createAddress)
 	}
 
 }
 
-func ListAddresses(c *gin.Context) {
+func listAddresses(c *gin.Context) {
 
 	pageSizeStr := c.Query("page_size")
 	pageStr := c.Query("page")
@@ -44,11 +44,11 @@ func ListAddresses(c *gin.Context) {
 	c.JSON(http.StatusOK, dtos.CreateAddressPagedResponse(c.Request, addresses, page, pageSize, totalCommentCount, includeUser))
 }
 
-func CreateAddress(c *gin.Context) {
+func createAddress(c *gin.Context) {
 
 	user := c.MustGet("currentUser").(models.User)
 
-	var json dtos.CreateAddress
+	var json dtos.Address
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return

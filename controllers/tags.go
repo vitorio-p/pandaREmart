@@ -16,14 +16,14 @@ import (
 )
 
 func RegisterTagRoutes(router *gin.RouterGroup) {
-	router.GET("", TagList)
+	router.GET("", tagList)
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.POST("", CreateTag)
+		router.POST("", createTag)
 	}
 }
 
-func TagList(c *gin.Context) {
+func tagList(c *gin.Context) {
 	tags, err := services.FetchAllTags()
 	if err != nil {
 		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("fetch_error", err))
@@ -42,7 +42,7 @@ func randomString(length int) string {
 	return string(b)
 }
 
-func CreateTag(c *gin.Context) {
+func createTag(c *gin.Context) {
 	user := c.Keys["currentUser"].(models.User)
 	if user.IsNotAdmin() {
 		c.JSON(http.StatusForbidden, dtos.CreateErrorDtoWithMessage("Permission denied, you must be admin"))

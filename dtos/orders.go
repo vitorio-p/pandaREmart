@@ -6,7 +6,7 @@ import (
 	"go.mod/models"
 )
 
-type CreateOrderRequestDto struct {
+type CreateOrderRequest struct {
 	FirstName     string `form:"first_name" json:"first_name" xml:"first_name"`
 	LastName      string `form:"last_name" json:"last_name" xml:"last_name"`
 	Country       string `form:"country" json:"country" xml:"country"`
@@ -26,12 +26,12 @@ func CreateOrderPagedResponse(request *http.Request, orders []models.Order, page
 
 		includeAddress, includeOrderItems, includeUser := getIncludeFlags(includes...)
 
-		resources[index] = CreateOrderDto(&order, includeAddress, includeOrderItems, includeUser)
+		resources[index] = createOrderDto(&order, includeAddress, includeOrderItems, includeUser)
 	}
-	return CreatePagedResponse(request, resources, "orders", page, page_size, totalOrdersCount)
+	return createPagedResponse(request, resources, "orders", page, page_size, totalOrdersCount)
 }
 
-func CreateOrderDto(order *models.Order, includes ...bool) map[string]interface{} {
+func createOrderDto(order *models.Order, includes ...bool) map[string]interface{} {
 
 	includeAddress, includeOrderItems, includeUser := getIncludeFlags(includes...)
 
@@ -74,14 +74,11 @@ func CreateOrderDto(order *models.Order, includes ...bool) map[string]interface{
 		}
 	}
 
-	return CreateSuccessDto(result)
+	return createSuccess(result)
 }
 
 func CreateOrderDetailsDto(order *models.Order) map[string]interface{} {
-	// includeUser -> false
-	// includeOrderItems -> true
-	// includeUser -> false
-	return CreateSuccessDto(CreateOrderDto(order, true, true, false))
+	return createSuccess(createOrderDto(order, true, true, false))
 }
 
 func getIncludeFlags(includes ...bool) (includeAddress, includeOrderItems, includeUser bool) {
@@ -101,5 +98,5 @@ func getIncludeFlags(includes ...bool) (includeAddress, includeOrderItems, inclu
 }
 
 func CreateOrderCreatedDto(order *models.Order) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(CreateOrderDetailsDto(order), "Order created successfully")
+	return createSuccessWithDtoAndMessageDto(CreateOrderDetailsDto(order), "Order created successfully")
 }
