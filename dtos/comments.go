@@ -7,7 +7,7 @@ import (
 	"go.mod/models"
 )
 
-type CreateComment struct {
+type Comment struct {
 	Content string `form:"content" json:"content" xml:"content"  binding:"required"`
 }
 
@@ -23,12 +23,12 @@ func CreateCommentPagedResponse(request *http.Request, comments []models.Comment
 			includeProduct = bools[1]
 		}
 
-		resources[index] = GetSummary(&comment, includeUser, includeProduct)
+		resources[index] = getSummary(&comment, includeUser, includeProduct)
 	}
-	return CreatePagedResponse(request, resources, "comments", page, page_size, count)
+	return createPagedResponse(request, resources, "comments", page, page_size, count)
 }
 
-func GetCommentDetailsDto(comment *models.Comment, includes ...bool) map[string]interface{} {
+func GetCommentDetails(comment *models.Comment, includes ...bool) map[string]interface{} {
 	includeUser := false
 	if len(includes) > 0 {
 		includeUser = includes[0]
@@ -37,10 +37,10 @@ func GetCommentDetailsDto(comment *models.Comment, includes ...bool) map[string]
 	if len(includes) > 1 {
 		includeProduct = includes[1]
 	}
-	return GetSummary(comment, includeUser, includeProduct)
+	return getSummary(comment, includeUser, includeProduct)
 }
 
-func GetSummary(comment *models.Comment, includeUser, includeProduct bool) map[string]interface{} {
+func getSummary(comment *models.Comment, includeUser, includeProduct bool) map[string]interface{} {
 	result := map[string]interface{}{
 		"id":         comment.ID,
 		"content":    comment.Content,
@@ -64,5 +64,5 @@ func GetSummary(comment *models.Comment, includeUser, includeProduct bool) map[s
 }
 
 func CreateCommentCreatedDto(comment *models.Comment, includes ...bool) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(GetCommentDetailsDto(comment, includes...), "Comment created successfully")
+	return createSuccessWithDtoAndMessageDto(GetCommentDetails(comment, includes...), "Comment created successfully")
 }

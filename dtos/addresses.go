@@ -6,7 +6,7 @@ import (
 	"go.mod/models"
 )
 
-type CreateAddress struct {
+type Address struct {
 	FirstName     string `form:"first_name" json:"first_name" xml:"first_name"`
 	LastName      string `form:"last_name" json:"last_name" xml:"last_name"`
 	Country       string `form:"country" json:"country" xml:"country" binding:"required"`
@@ -18,12 +18,12 @@ type CreateAddress struct {
 func CreateAddressPagedResponse(request *http.Request, addresses []models.Address, page, page_size, count int, includeUser bool) map[string]interface{} {
 	var resources = make([]interface{}, len(addresses))
 	for index, address := range addresses {
-		resources[index] = GetAddressDto(&address, includeUser)
+		resources[index] = getAddress(&address, includeUser)
 	}
-	return CreatePagedResponse(request, resources, "addresses", page, page_size, count)
+	return createPagedResponse(request, resources, "addresses", page, page_size, count)
 }
 
-func GetAddressDto(address *models.Address, includeUser bool) map[string]interface{} {
+func getAddress(address *models.Address, includeUser bool) map[string]interface{} {
 	dto := map[string]interface{}{
 		"id":         address.ID,
 		"first_name": address.FirstName,
@@ -43,5 +43,5 @@ func GetAddressDto(address *models.Address, includeUser bool) map[string]interfa
 }
 
 func GetAddressCreatedDto(address *models.Address, includeUser bool) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(GetAddressDto(address, includeUser), "StreetAddress created successfully")
+	return createSuccessWithDtoAndMessageDto(getAddress(address, includeUser), "StreetAddress created successfully")
 }

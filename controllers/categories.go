@@ -17,23 +17,23 @@ import (
 )
 
 func RegisterCategoryRoutes(router *gin.RouterGroup) {
-	router.GET("", CategoryList)
+	router.GET("", categoryList)
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.POST("", CreateCategory)
+		router.POST("", createCategory)
 	}
 }
 
-func CategoryList(c *gin.Context) {
+func categoryList(c *gin.Context) {
 	tags, err := services.FetchAllCategories()
 	if err != nil {
 		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("fetch_error", err))
 		return
 	}
-	c.JSON(http.StatusOK, dtos.CreateCategoryListMapDto(tags))
+	c.JSON(http.StatusOK, dtos.CreateCategoryListMap(tags))
 }
 
-func CreateCategory(c *gin.Context) {
+func createCategory(c *gin.Context) {
 	user := c.MustGet("currentUser").(models.User)
 	if user.IsNotAdmin() {
 		c.JSON(http.StatusForbidden, dtos.CreateErrorDtoWithMessage("Permission denied, you must be admin"))

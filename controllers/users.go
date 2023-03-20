@@ -14,11 +14,11 @@ import (
 )
 
 func RegisterUserRoutes(router *gin.RouterGroup) {
-	router.POST("/", UsersRegistration)
-	router.POST("/login", UsersLogin)
+	router.POST("/", usersRegistration)
+	router.POST("/login", usersLogin)
 }
 
-func UsersRegistration(c *gin.Context) {
+func usersRegistration(c *gin.Context) {
 
 	var json dtos.RegisterRequestDto
 	if err := c.ShouldBindJSON(&json); err != nil {
@@ -42,7 +42,7 @@ func UsersRegistration(c *gin.Context) {
 		"full_messages": []string{"User created successfully"}})
 }
 
-func UsersLogin(c *gin.Context) {
+func usersLogin(c *gin.Context) {
 
 	var json dtos.LoginRequestDto
 	if err := c.ShouldBindJSON(&json); err != nil {

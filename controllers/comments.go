@@ -15,20 +15,20 @@ import (
 )
 
 func RegisterCommentRoutes(router *gin.RouterGroup) {
-	router.GET("/products/:slug/comments", ListComments)
-	router.GET("/products/:slug/comments/:id", ShowComment)
-	router.GET("/comments/:id", ShowComment)
+	router.GET("/products/:slug/comments", listComments)
+	router.GET("/products/:slug/comments/:id", showComment)
+	router.GET("/comments/:id", showComment)
 
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.POST("/products/:slug/comments", CreateComment)
+		router.POST("/products/:slug/comments", createComment)
 		router.DELETE("/comments/:id", DeleteComment)
 		router.DELETE("/products/:slug/comments/:id", DeleteComment)
 	}
 
 }
 
-func ListComments(c *gin.Context) {
+func listComments(c *gin.Context) {
 	slug := c.Param("slug")
 	database := infrastructure.GetDb()
 	productId := -1
@@ -55,14 +55,14 @@ func ListComments(c *gin.Context) {
 	c.JSON(http.StatusOK, dtos.CreateCommentPagedResponse(c.Request, comments, page, pageSize, totalCommentCount, true, false))
 }
 
-func CreateComment(c *gin.Context) {
+func createComment(c *gin.Context) {
 	slug := c.Param("slug")
 	if slug == "" {
 		c.JSON(http.StatusBadRequest, dtos.CreateErrorDtoWithMessage("You must provide a product slug you want to comment"))
 		return
 	}
 
-	var json dtos.CreateComment
+	var json dtos.Comment
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
@@ -89,24 +89,24 @@ func CreateComment(c *gin.Context) {
 	c.JSON(http.StatusOK, dtos.CreateCommentCreatedDto(&comment))
 }
 
-func ShowComment(c *gin.Context) {
+func showComment(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateErrorDtoWithMessage("You must provide a valid comment id"))
 	}
 	comment := services.FetchCommentById(id, true, true)
-	c.JSON(http.StatusOK, dtos.GetCommentDetailsDto(&comment, true, true))
+	c.JSON(http.StatusOK, dtos.GetCommentDetails(&comment, true, true))
 }
 
 func DeleteComment(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(models.User)
 
-	id64, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id64, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	id := uint(id64)
 	database := infrastructure.GetDb()
 	var comment models.Comment
-	err = database.Select([]string{"id", "user_id"}).Find(&comment, id).Error
+	err := database.Select([]string{"id", "user_id"}).Find(&comment, id).Error
 	if err != nil || comment.ID == 0 {
 		// the comment.ID == is redundat, but shows the other way of checking but it is less readable
 		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("comment", err))
