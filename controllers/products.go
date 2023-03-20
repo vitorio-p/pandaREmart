@@ -21,17 +21,17 @@ import (
 )
 
 func RegisterProductRoutes(router *gin.RouterGroup) {
-	router.GET("/", ProductList)
-	router.GET("/:slug", GetProductDetailsBySlug)
+	router.GET("/", productList)
+	router.GET("/:slug", getProductDetailsBySlug)
 
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.POST("/", CreateProduct)
-		router.DELETE("/:slug", ProductDelete)
+		router.POST("/", createProduct)
+		router.DELETE("/:slug", productDelete)
 	}
 }
 
-func ProductList(c *gin.Context) {
+func productList(c *gin.Context) {
 
 	pageSizeStr := c.Query("page_size")
 	pageStr := c.Query("page")
@@ -48,25 +48,25 @@ func ProductList(c *gin.Context) {
 
 	productModels, modelCount, commentsCount, err := services.FetchProductsPage(page, pageSize)
 	if err != nil {
-		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("Invalid param")))
+		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("invalid param")))
 		return
 	}
 
 	c.JSON(http.StatusOK, dtos.CreatedProductPagedResponse(c.Request, productModels, page, pageSize, modelCount, commentsCount))
 }
 
-func GetProductDetailsBySlug(c *gin.Context) {
+func getProductDetailsBySlug(c *gin.Context) {
 	productSlug := c.Param("slug")
 
 	product := services.FetchProductDetails(&models.Product{Slug: productSlug}, true)
 	if product.ID == 0 {
-		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("Invalid slug")))
+		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("invalid slug")))
 		return
 	}
 	c.JSON(http.StatusOK, dtos.CreateProductDetailsDto(product))
 }
 
-func CreateProduct(c *gin.Context) {
+func createProduct(c *gin.Context) {
 	// Only admin users can create products
 	user := c.Keys["currentUser"].(models.User)
 	if user.IsNotAdmin() {
@@ -85,6 +85,9 @@ func CreateProduct(c *gin.Context) {
 
 	price := formDto.Price
 	stock, err := strconv.ParseInt(c.PostForm("stock"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("parseInt_error", err))
+	}
 	form, err := c.MultipartForm()
 
 	tagCount := 0
@@ -179,11 +182,11 @@ func CreateProduct(c *gin.Context) {
 
 }
 
-func ProductDelete(c *gin.Context) {
+func productDelete(c *gin.Context) {
 	slug := c.Param("slug")
 	err := services.DeleteProduct(&models.Product{Slug: slug})
 	if err != nil {
-		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("Invalid slug")))
+		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("products", errors.New("invalid slug")))
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"product": "Delete success"})

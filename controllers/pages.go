@@ -10,17 +10,20 @@ import (
 )
 
 func RegisterPageRoutes(router *gin.RouterGroup) {
-	router.GET("", Home)
-	router.GET("/home", Home)
+	router.GET("", home)
+	router.GET("/home", home)
 
 }
 
-func Home(c *gin.Context) {
+func home(c *gin.Context) {
 
 	tags, err := services.FetchAllTags()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
+	}
 	categories, err := services.FetchAllCategories()
 	if err != nil {
-		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("comments", errors.New("Somethign went wrong")))
+		c.JSON(http.StatusNotFound, dtos.CreateDetailedErrorDto("comments", errors.New("something went wrong")))
 		return
 	}
 

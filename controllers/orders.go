@@ -12,15 +12,15 @@ import (
 )
 
 func RegisterOrderRoutes(router *gin.RouterGroup) {
-	router.POST("", CreateOrder)
+	router.POST("", createOrder)
 	router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	{
-		router.GET("", ListOrders)
-		router.GET("/:id", ShowOrder)
+		router.GET("", listOrders)
+		router.GET("/:id", showOrder)
 	}
 }
 
-func ListOrders(c *gin.Context) {
+func listOrders(c *gin.Context) {
 	pageSizeStr := c.Query("page_size")
 	pageStr := c.Query("page")
 	pageSize, err := strconv.Atoi(pageSizeStr)
@@ -35,12 +35,18 @@ func ListOrders(c *gin.Context) {
 	userId := c.MustGet("currentUserId").(uint)
 
 	orders, totalCommentCount, err := services.FetchOrdersPage(userId, page, pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
+	}
 
 	c.JSON(http.StatusOK, dtos.CreateOrderPagedResponse(c.Request, orders, page, pageSize, totalCommentCount, false, false))
 }
 
-func ShowOrder(c *gin.Context) {
+func showOrder(c *gin.Context) {
 	orderId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("parsingInt_error", err))
+	}
 	user := c.MustGet("currentUser").(models.User)
 	order, err := services.FetchOrderDetails(uint(orderId))
 	if err != nil {
@@ -56,8 +62,8 @@ func ShowOrder(c *gin.Context) {
 	}
 }
 
-func CreateOrder(c *gin.Context) {
-	var orderRequest dtos.CreateOrderRequestDto
+func createOrder(c *gin.Context) {
+	var orderRequest dtos.CreateOrderRequest
 	if err := c.ShouldBind(&orderRequest); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
@@ -73,10 +79,6 @@ func CreateOrder(c *gin.Context) {
 	// Reuse address can only be done by authenticated users
 	if orderRequest.AddressId != 0 && userLoggedIn {
 		address = services.FetchAddress(orderRequest.AddressId)
-		/*if err != nil || address.ID == 0 {
-			c.JSON(http.StatusBadRequest, dtos.CreateDetailedErrorDto("db_error", err))
-			return
-		}*/
 		if address.UserId != user.ID {
 			c.JSON(http.StatusForbidden, dtos.CreateErrorDtoWithMessage("permission denied"))
 			return

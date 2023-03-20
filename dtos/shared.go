@@ -19,7 +19,7 @@ type ErrorDto struct {
 	Errors map[string]interface{} `json:"errors"`
 }
 
-func CreatePageMeta(request *http.Request, loadedItemsCount, page, page_size, totalItemsCount int) map[string]interface{} {
+func createPageMeta(request *http.Request, loadedItemsCount, page, page_size, totalItemsCount int) map[string]interface{} {
 	page_meta := map[string]interface{}{}
 	page_meta["offset"] = (page - 1) * page_size
 	page_meta["requested_page_size"] = page_size
@@ -55,9 +55,9 @@ func CreatePageMeta(request *http.Request, loadedItemsCount, page, page_size, to
 	return response
 }
 
-func CreatePagedResponse(request *http.Request, resources []interface{}, resource_name string, page, page_size, totalItemsCount int) map[string]interface{} {
+func createPagedResponse(request *http.Request, resources []interface{}, resource_name string, page, page_size, totalItemsCount int) map[string]interface{} {
 
-	response := CreatePageMeta(request, len(resources), page, page_size, totalItemsCount)
+	response := createPageMeta(request, len(resources), page, page_size, totalItemsCount)
 	response[resource_name] = resources
 	return response
 }
@@ -100,27 +100,27 @@ func CreateBadRequestErrorDto(err error) ErrorDto {
 	return res
 }
 
-func CreateSuccessDto(result map[string]interface{}) map[string]interface{} {
+func createSuccess(result map[string]interface{}) map[string]interface{} {
 	result["success"] = true
 	return result
 }
 
 func CreateSuccessWithMessageDto(message string) interface{} {
-	return CreateSuccessWithMessagesDto([]string{message})
+	return createSuccessWithMessagesDto([]string{message})
 }
 
-func CreateSuccessWithMessagesDto(messages []string) interface{} {
+func createSuccessWithMessagesDto(messages []string) interface{} {
 	return gin.H{
 		"success":       true,
 		"full_messages": messages,
 	}
 }
 
-func CreateSuccessWithDtoAndMessagesDto(data map[string]interface{}, messages []string) map[string]interface{} {
+func createSuccessWithDtoAndMessagesDto(data map[string]interface{}, messages []string) map[string]interface{} {
 	data["success"] = true
 	data["full_messages"] = messages
 	return data
 }
-func CreateSuccessWithDtoAndMessageDto(data map[string]interface{}, message string) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessagesDto(data, []string{message})
+func createSuccessWithDtoAndMessageDto(data map[string]interface{}, message string) map[string]interface{} {
+	return createSuccessWithDtoAndMessagesDto(data, []string{message})
 }

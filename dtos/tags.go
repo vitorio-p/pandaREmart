@@ -18,7 +18,7 @@ func CreateTagListMapDto(tags []models.Tag) map[string]interface{} {
 		t[i] = CreateTagDto(tags[i])
 	}
 	result["tags"] = t
-	return CreateSuccessDto(result)
+	return createSuccess(result)
 }
 
 func CreateTagListDto(tags []models.Tag) []interface{} {
@@ -44,5 +44,5 @@ func CreateTagDto(tag models.Tag) map[string]interface{} {
 }
 
 func CreateTagCreatedDto(tag models.Tag) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(CreateTagDto(tag), "Tag created successfully")
+	return createSuccessWithDtoAndMessageDto(CreateTagDto(tag), "Tag created successfully")
 }

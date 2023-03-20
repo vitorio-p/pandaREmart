@@ -20,12 +20,12 @@ type CreateProduct struct {
 func CreatedProductPagedResponse(request *http.Request, products []models.Product, page, page_size, count int, commentsCount []int) interface{} {
 	var resources = make([]interface{}, len(products))
 	for index, product := range products {
-		resources[index] = CreateProductDto(&product, commentsCount[index])
+		resources[index] = createProductDto(&product, commentsCount[index])
 	}
-	return CreatePagedResponse(request, resources, "products", page, page_size, count)
+	return createPagedResponse(request, resources, "products", page, page_size, count)
 }
 
-func CreateProductDto(product *models.Product, commentCount int) map[string]interface{} {
+func createProductDto(product *models.Product, commentCount int) map[string]interface{} {
 
 	var tags = make([]map[string]interface{}, len(product.Tags))
 	var categories = make([]map[string]interface{}, len(product.Categories))
@@ -80,16 +80,16 @@ func CreateProductDto(product *models.Product, commentCount int) map[string]inte
 }
 
 func CreateProductDetailsDto(product models.Product) map[string]interface{} {
-	result := CreateProductDto(&product, -1)
+	result := createProductDto(&product, -1)
 	result["description"] = product.Description
 	comments := make([]map[string]interface{}, len(product.Comments))
 	for index, comment := range product.Comments {
-		comments[index] = GetSummary(&comment, true, false)
+		comments[index] = getSummary(&comment, true, false)
 	}
 
 	result["comments"] = comments
 	return result
 }
 func CreateProductCreatedDto(product models.Product) map[string]interface{} {
-	return CreateSuccessWithDtoAndMessageDto(CreateProductDetailsDto(product), "Product crated successfully")
+	return createSuccessWithDtoAndMessageDto(CreateProductDetailsDto(product), "Product crated successfully")
 }
