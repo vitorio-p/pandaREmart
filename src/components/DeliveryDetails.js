@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Datetime from 'react-datetime'
+import Datetime from "react-datetime";
 
 export default function DeliveryDetails() {
   const [isShown, setIsShown] = useState(false);
 
   const timeConstraints = {
     minutes: {
-      step: 30
-    }
-  }
+      step: 30,
+    },
+  };
 
   return (
     <React.Fragment>
@@ -18,9 +18,8 @@ export default function DeliveryDetails() {
           <h5>Delivery address</h5>
           <div>1 Alexandra View #03-69</div>
           <div>Singapore 369963</div>
-          <h5>Recurring order</h5>
         </div>
-        <div className="form-check form-switch form-check-reverse">
+        <div className="form-check form-switch form-check-reverse margin-top">
           <input
             className="form-check-input checkbox-pink"
             type="checkbox"
@@ -29,104 +28,114 @@ export default function DeliveryDetails() {
               setIsShown(!isShown);
             }}
           />
-          <label className="form-check-label" for="flexSwitchCheckReverse">
-            Recurring order
+          <label
+            className="form-check-label side-by-side"
+            for="flexSwitchCheckReverse"
+          >
+            <h5>Recurring order</h5>
           </label>
         </div>
         {isShown && (
           <div id="#collapseExample">
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="mon"
-              />
-              <label className="form-check-label" for="inlineRadio1">
-                Mon
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="tue"
-              />
-              <label className="form-check-label" for="inlineRadio2">
-                Tue
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="wed"
-              />
-              <label className="form-check-label" for="inlineRadio3">
-                Wed
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="thu"
-              />
-              <label className="form-check-label" for="inlineRadio3">
-                Thu
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="fri"
-              />
-              <label className="form-check-label" for="inlineRadio3">
-                Fri
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="sat"
-              />
-              <label className="form-check-label" for="inlineRadio3">
-                Sat
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input checkbox-pink"
-                type="checkbox"
-                name="inlineRadioOptions"
-                id="day"
-                value="sun"
-              />
-              <label className="form-check-label" for="inlineRadio3">
-                Sun
-              </label>
-            </div>
-
             <div>
-              <div>Time</div>
-              <Datetime dateFormat={false} timeConstraints={timeConstraints}/>
+              <b>Days</b>
+            </div>
+            <div className="space-between">
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="mon"
+                />
+                <label className="form-check-label" for="inlineRadio1">
+                  Mon
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="tue"
+                />
+                <label className="form-check-label" for="inlineRadio2">
+                  Tue
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="wed"
+                />
+                <label className="form-check-label" for="inlineRadio3">
+                  Wed
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="thu"
+                />
+                <label className="form-check-label" for="inlineRadio3">
+                  Thu
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="fri"
+                />
+                <label className="form-check-label" for="inlineRadio3">
+                  Fri
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="sat"
+                />
+                <label className="form-check-label" for="inlineRadio3">
+                  Sat
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input checkbox-pink"
+                  type="checkbox"
+                  name="inlineRadioOptions"
+                  id="day"
+                  value="sun"
+                />
+                <label className="form-check-label" for="inlineRadio3">
+                  Sun
+                </label>
+              </div>
             </div>
 
-            <div className="cart-details-item">
-              <div>Repeat:</div>
+            <div className="space-between">
+              <b>Time</b>
+              <Datetime dateFormat={false} timeConstraints={timeConstraints} />
+            </div>
+
+            <div className="space-between">
+              <div>
+                <b>Repeat</b>
+              </div>
               <select className="form-select dropdown">
                 <option selected>Choose one option</option>
                 <option value="1">Every week</option>
@@ -136,8 +145,8 @@ export default function DeliveryDetails() {
               </select>
             </div>
 
-            <div className="cart-details-item">
-              Ends
+            <div className="space-between">
+              <b>Ends</b>
               <div className="form-check">
                 <input
                   className="form-check-input checkbox-pink"
