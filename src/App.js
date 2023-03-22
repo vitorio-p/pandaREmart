@@ -1,10 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datetime/css/react-datetime.css";
 import { Route, Routes } from "react-router-dom";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
 import StoreFront from "./pages/StoreFront";
 import UserPage from "./pages/UserPage";
+
 
 function App() {
   return (
