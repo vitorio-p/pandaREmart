@@ -12,6 +12,9 @@ export default class NavBar extends React.Component {
           <Link to="/auth">
             <UserSVG />
           </Link>
+          <Link to="/user">
+            <h7 className="left pinkFont">User</h7>
+          </Link>
           <Link to="/">
             <FoodpandaLogoSVG className="foodpandaLogo translate-middle-x" />
           </Link>
