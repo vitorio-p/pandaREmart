@@ -77,6 +77,11 @@
   padding: 0.5rem;
 }
 
+.foodpandaLogo {
+  position: absolute;
+  bottom: 0.1rem;
+}
+
 /* StoreFront Page */
 .cart {
   height: 100vh;

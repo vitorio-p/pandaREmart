@@ -13,7 +13,7 @@ export default class NavBar extends React.Component {
             <UserSVG />
           </Link>
           <Link to="/">
-            <FoodpandaLogoSVG className="position-absolute start-50 translate-middle-x" />
+            <FoodpandaLogoSVG className="foodpandaLogo translate-middle-x" />
           </Link>
           <Link to="/cart">
             <img src={cartLogo} alt="cart" />
