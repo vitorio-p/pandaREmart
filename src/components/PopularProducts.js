@@ -8,8 +8,8 @@ import "../styles.css";
 import { ReactComponent as PandaMart } from "../svg/pandamart-white.svg";
 import ItemModal from "./ItemModal";
 
-export default class PopularProducts extends React.Component {
-  state = {
+export default function PopularProducts() {
+  const state = {
     items: [
       {
         id: 1,
@@ -32,10 +32,10 @@ export default class PopularProducts extends React.Component {
     ],
   };
 
-  renderItems() {
+  function renderItems(state) {
     let jsx = [];
 
-    for (let item of this.state.items) {
+    for (let item of state.items) {
       jsx.push(
         <div key={item.id} className="card item" onClick={ItemModal}>
           <Link to="/item/:id">
@@ -55,22 +55,20 @@ export default class PopularProducts extends React.Component {
     return jsx;
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className="popular-product">
-          <div className="border pink px-2">
-            <PandaMart /> <br></br>
-            in 20 minutes
-          </div>
-          <div className="px-2">
-            <h2>
-              <b>Popular Products</b>
-            </h2>
-            <div className="d-flex">{this.renderItems()}</div>
-          </div>
+  return (
+    <React.Fragment>
+      <div className="popular-product">
+        <div className="border pink px-2">
+          <PandaMart /> <br></br>
+          in 20 minutes
         </div>
-      </React.Fragment>
-    );
-  }
+        <div className="px-2">
+          <h2>
+            <b>Popular Products</b>
+          </h2>
+          <div className="d-flex">{renderItems(state)}</div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
 }
