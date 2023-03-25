@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datetime/css/react-datetime.css";
 import { Route, Routes } from "react-router-dom";
+import AuthenticationPage from "./pages/AuthenticationPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
@@ -12,6 +13,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<StoreFront />} />
+      <Route exact path="/auth" element={<AuthenticationPage />} />
       <Route exact path="/user" element={<UserPage />} />
       <Route exact path="/cart" element={<CartPage />} />
       <Route exact path="/checkout" element={<CheckoutPage />} />
