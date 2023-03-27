@@ -32,9 +32,9 @@ func listOrders(c *gin.Context) {
 	if err != nil {
 		page = 1
 	}
-	userId := c.MustGet("currentUserId").(uint)
+	// userId := c.MustGet("currentUserId").(uint)
 
-	orders, totalCommentCount, err := services.FetchOrdersPage(userId, page, pageSize)
+	orders, totalCommentCount, err := services.FetchOrdersPage(page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
 	}
@@ -47,19 +47,19 @@ func showOrder(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("parsingInt_error", err))
 	}
-	user := c.MustGet("currentUser").(models.User)
+	// user := c.MustGet("currentUser").(models.User)
 	order, err := services.FetchOrderDetails(uint(orderId))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
 		return
 	}
 
-	if order.UserId == user.ID || user.IsAdmin() {
-		c.JSON(http.StatusOK, dtos.CreateOrderDetailsDto(&order))
-	} else {
-		c.JSON(http.StatusForbidden, dtos.CreateErrorDtoWithMessage("Permission denied, you can not view this order"))
-		return
-	}
+	// if order.UserId == user.ID || user.IsAdmin() {
+	c.JSON(http.StatusOK, dtos.CreateOrderDetailsDto(&order))
+	// } else {
+	// 	c.JSON(http.StatusForbidden, dtos.CreateErrorDtoWithMessage("Permission denied, you can not view this order"))
+	// 	return
+	// }
 }
 
 func createOrder(c *gin.Context) {
@@ -136,7 +136,6 @@ func createOrder(c *gin.Context) {
 	orderItems := make([]models.OrderItem, len(products))
 
 	for i := 0; i < len(products); i++ {
-		// I am assuming product ids returned are in the same order as the cart_items, TODO: implement a more robust code to ensure
 		orderItems[i] = models.OrderItem{
 			ProductId:   products[i].ID,
 			ProductName: products[i].Name,

@@ -5,12 +5,12 @@ import (
 	"go.mod/models"
 )
 
-func FetchOrdersPage(userId uint, page, pageSize int) (orders []models.Order, totalOrdersCount int, err error) {
+func FetchOrdersPage(page, pageSize int) (orders []models.Order, totalOrdersCount int, err error) {
 	database := infrastructure.GetDb()
 
 	totalOrdersCount = 0
 
-	query := database.Model(&models.Order{}).Where(&models.Order{UserId: userId})
+	query := database.Model(&models.Order{})
 	query.Count(&totalOrdersCount)
 
 	err = query.Offset((page - 1) * pageSize).Limit(pageSize).
