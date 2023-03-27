@@ -7,6 +7,9 @@ type OrderItem struct {
 	Order   Order
 	OrderId uint `gorm:"not null"`
 
+	RecurringOrder   RecurringOrder
+	RecurringOrderId uint `gorm:"default:null"`
+
 	Product   Product
 	ProductId uint `gorm:"not null"`
 

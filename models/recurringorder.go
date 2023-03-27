@@ -6,14 +6,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type Item struct {
-	ID       uint
-	Quantity int
-}
-
-type ReccuringOrder struct {
+type RecurringOrder struct {
 	gorm.Model
-	Name  string    `gorm:"not null"`
-	Day   time.Time `gorm:"not null"`
-	Items []Item    `gorm:"not null"`
+	OrderStatus int         `gorm:"default:0"`
+	Day         time.Time   `gorm:"not null"`
+	Reps        int         `gorm:"not null"`
+	OrderItems  []OrderItem `gorm:"foreignKey:OrderId"`
+	AddresId    uint
+
+	User   User `gorm:"foreignKey:UserId:"`
+	UserId uint `gorm:"default:null"`
 }

@@ -136,7 +136,6 @@ func createOrder(c *gin.Context) {
 	orderItems := make([]models.OrderItem, len(products))
 
 	for i := 0; i < len(products); i++ {
-		// I am assuming product ids returned are in the same order as the cart_items, TODO: implement a more robust code to ensure
 		orderItems[i] = models.OrderItem{
 			ProductId:   products[i].ID,
 			ProductName: products[i].Name,

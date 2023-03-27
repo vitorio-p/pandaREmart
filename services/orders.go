@@ -28,7 +28,6 @@ func FetchOrdersPage(userId uint, page, pageSize int) (orders []models.Order, to
 
 	var orderItems []models.OrderItem
 	if len(orders) > 0 {
-		//
 		database.Select("id, order_id").Where("order_id in (?)", orderIds).Find(&orderItems)
 
 		for i := 0; i < len(orderItems); i++ {
