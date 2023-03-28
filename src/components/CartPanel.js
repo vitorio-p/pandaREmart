@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import breadImage from "../img/bread.jpeg";
 import eggImage from "../img/dasoon-eggs.webp";
 import milkImage from "../img/meiji-2l-milk.png";
 import addImage from "../svg/add.svg";
@@ -14,18 +15,27 @@ export default function CartPanel() {
         name: "Dasoon Premium Fresh Egg 15S",
         price: 5,
         image: eggImage,
-        quantity: 0,
+        quantity: 1,
       },
       {
         id: 1,
         name: "Meiji Fresh Milk 2L",
         price: 7,
         image: milkImage,
-        quantity: 0,
+        quantity: 1,
+      },
+      {
+        id: 2,
+        name: "Gardenia Jumbo 600 Enriched White Bread",
+        price: 3,
+        image: breadImage,
+        quantity: 1,
       },
     ],
     others: {
+      subtotal: 0,
       deliveryFee: 2,
+      total: 0,
     },
   };
 
@@ -34,7 +44,7 @@ export default function CartPanel() {
 
     for (let item of state.items) {
       jsx.push(
-        <div className="cart-box padding mb-4" id={item.id}>
+        <div className="cart-box padding mb-4" id={item.id} key={item.id}>
           <div className="cart-item mb-2">
             <img className="img" src={item.image} alt="egg" />
             <div>{item.name}</div>
@@ -85,6 +95,7 @@ export default function CartPanel() {
     for (let cartItem of itemToBeDeleted) {
       if (cartItem.id === idToBeDeleted) {
         cartItem.remove();
+        state.items[idToBeDeleted].quantity = 0;
       }
       updatePrices();
     }
@@ -96,6 +107,7 @@ export default function CartPanel() {
     for (let cartItem of inputBox) {
       if (cartItem.id === idToBeAdded) {
         cartItem.value++;
+        state.items[idToBeAdded].quantity = +cartItem.value;
       }
       updatePrices();
     }
@@ -107,6 +119,7 @@ export default function CartPanel() {
     for (let cartItem of inputBox) {
       if (cartItem.id === idToBeSubtracted) {
         cartItem.value--;
+        state.items[idToBeSubtracted].quantity = +cartItem.value;
       }
       if (cartItem.value < 1) {
         deleteItem(item);
@@ -160,6 +173,12 @@ export default function CartPanel() {
     subTotalHTML.innerHTML = subtotal;
     let totalHTML = document.getElementsByClassName("cart-total-value")[0];
     totalHTML.innerHTML = total;
+    state.others.subtotal = subtotal;
+    state.others.total = total;
+  }
+
+  window.onload = function() {
+    setTimeout(updatePrices(), 1000);
   }
 
   return (
@@ -176,7 +195,7 @@ export default function CartPanel() {
               <div>
                 <div className="inline">S$</div>
                 <div className="cart-details-subtotal-value inline margin-left">
-                  {state.items[0].price + state.items[1].price}
+                  {state.others.subtotal}
                 </div>
               </div>
             </div>
@@ -196,7 +215,7 @@ export default function CartPanel() {
               <div>
                 <div className="inline">S$</div>
                 <div className="cart-total-value inline margin-left">
-                  {state.items[0].price + state.others.deliveryFee}
+                  {state.others.total}
                 </div>
               </div>
             </div>
@@ -205,6 +224,7 @@ export default function CartPanel() {
             className="d-grid padding mt-1"
             to="/checkout"
             style={{ textDecoration: "none" }}
+            state={state}
           >
             <button className="padding btn pink">Submit order</button>
           </Link>

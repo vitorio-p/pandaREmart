@@ -206,7 +206,7 @@ input::-webkit-inner-spin-button {
 .side-by-side {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 98%;
 }
 
 .dropdown {

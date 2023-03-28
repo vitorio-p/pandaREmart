@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import breadImage from "../img/bread.jpeg";
 import eggImage from "../img/dasoon-eggs.webp";
 import milkImage from "../img/meiji-2l-milk.png";
-import addToCartButton from "../svg/ic-add.svg";
 import "../styles.css";
+import addToCartButton from "../svg/ic-add.svg";
 import { ReactComponent as PandaMart } from "../svg/pandamart-white.svg";
 import ItemModal from "./ItemModal";
 
 export default function PopularProducts() {
+  // GET data from backend. this should be independent from CartPanel.js
   const state = {
     items: [
       {
@@ -22,12 +22,6 @@ export default function PopularProducts() {
         name: "Meiji Fresh Milk 2L",
         price: 7,
         image: milkImage,
-      },
-      {
-        id: 3,
-        name: "Gardenia Jumbo 600 Enriched White Bread",
-        price: 3,
-        image: breadImage,
       },
     ],
   };
