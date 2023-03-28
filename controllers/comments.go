@@ -62,7 +62,7 @@ func createComment(c *gin.Context) {
 	}
 
 	var json dtos.Comment
-	if err := c.ShouldBindJSON(&json); err != nil {
+	if err := c.Bind(&json); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
 	}

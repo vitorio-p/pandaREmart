@@ -19,16 +19,13 @@ func RegisterUserRoutes(router *gin.RouterGroup) {
 }
 
 func usersRegistration(c *gin.Context) {
-
 	var json dtos.RegisterRequestDto
-	// if err := c.ShouldBindJSON(&json); err != nil {
-	// 	c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
-	// 	return
-	// }
-
+	if err := c.Bind(&json); err != nil {
+		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
+		return
+	}
 	password, _ := bcrypt.GenerateFromPassword([]byte(json.Password), bcrypt.DefaultCost)
-	if err := services.CreateOne(&models.User{
-		Username:  json.Username,
+	if err := services.CreateOne(&models.User{Username: json.Username,
 		Password:  string(password),
 		FirstName: json.FirstName,
 		LastName:  json.LastName,
@@ -38,6 +35,7 @@ func usersRegistration(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("database", err))
 		return
 	}
+
 	c.JSON(http.StatusCreated, gin.H{
 		"success":       true,
 		"full_messages": []string{"User created successfully"}})
@@ -46,7 +44,7 @@ func usersRegistration(c *gin.Context) {
 func usersLogin(c *gin.Context) {
 
 	var json dtos.LoginRequestDto
-	if err := c.ShouldBindJSON(&json); err != nil {
+	if err := c.Bind(&json); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
 	}

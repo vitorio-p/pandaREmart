@@ -4,9 +4,9 @@ go 1.19
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/contrib v0.0.0-20221130124618-7e01895a63f2
 	github.com/gin-gonic/gin v1.9.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gosimple/slug v1.13.1
 	github.com/icrowley/fake v0.0.0-20221112152111-d7b7e2276db2
 	github.com/jinzhu/gorm v1.9.16
