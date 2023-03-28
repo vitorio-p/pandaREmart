@@ -228,10 +228,16 @@ input::-webkit-inner-spin-button {
   width: 654px;
 }
 
-/* User Page */
-.user-page {
+/* Recurring Order Page */
+.recurring-order {
   display: grid;
   justify-content: center;
+}
+
+.recurring-order-page {
+  display: flex;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .rop-component {
