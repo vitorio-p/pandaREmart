@@ -12,7 +12,7 @@ import (
 
 type User struct {
 	gorm.Model
-	//Id           uint    `gorm:"primary_key"`
+	// Id        uint   `gorm:"primary_key"`
 	FirstName string `gorm:"varchar(255);not null"`
 	LastName  string `gorm:"varchar(255);not null"`
 	Username  string `gorm:"column:username"`

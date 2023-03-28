@@ -47,7 +47,7 @@ func createAddress(c *gin.Context) {
 	user := c.MustGet("currentUser").(models.User)
 
 	var json dtos.Address
-	if err := c.ShouldBindJSON(&json); err != nil {
+	if err := c.Bind(&json); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
 	}

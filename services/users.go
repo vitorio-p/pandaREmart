@@ -18,7 +18,7 @@ func FindOneUser(condition interface{}) (models.User, error) {
 
 // You could update properties of an User to database returning with error info.
 //
-//	err := db.Model(userModel).Update(User{Username: "wangzitian0"}).Error
+//	err := db.Model(userModel).Update(User{Username: "username0"}).Error
 func UpdateUser(user models.User, data interface{}) error {
 	database := infrastructure.GetDb()
 	err := database.Model(user).Update(data).Error
