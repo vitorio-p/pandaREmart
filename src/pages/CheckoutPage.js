@@ -10,6 +10,18 @@ export default function CheckoutPage() {
   const location = useLocation();
   const cart = location.state;
 
+  // const state = {
+  //   recurringOrderDetails: {
+  //     id: 0,
+  //     name: "Order 1",
+  //     days: ["mon", "tue"],
+  //     time: "1400",
+  //     repeat: "1 week",
+  //     ends: "never",
+  //   },
+  //   paymentMethod: "",
+  // };
+
   return (
     <React.Fragment>
       <NavBar />
@@ -18,6 +30,7 @@ export default function CheckoutPage() {
         <DeliveryDetails />
         <PersonalDetails />
         <PaymentDetails />
+        {/* POST API to store order into db */}
         <Link
           className="d-grid mt-2"
           to="/order-tracking"

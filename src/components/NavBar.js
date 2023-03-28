@@ -12,14 +12,11 @@ export default class NavBar extends React.Component {
           <Link to="/users/signup">
             <UserSVG />
           </Link>
-          <Link to="/user">
-            <h6 className="left pinkFont">User</h6>
-          </Link>
           <Link to="/">
             <FoodpandaLogoSVG className="foodpandaLogo translate-middle-x" />
           </Link>
-          <Link to="/cart">
-            <img src={cartLogo} alt="cart" />
+          <Link to="/recurring-order">
+            <img src={cartLogo} alt="recurring order" />
           </Link>
         </nav>
       </React.Fragment>

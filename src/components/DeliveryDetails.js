@@ -38,6 +38,15 @@ export default function DeliveryDetails() {
         {isShown && (
           <div id="#collapseExample">
             <div>
+              <b>Name</b>
+              <input
+                type="text"
+                class="form-control"
+                id="recurring-order-name"
+                placeholder="Order 1"
+              />
+            </div>
+            <div>
               <b>Days</b>
             </div>
             <div className="space-between">

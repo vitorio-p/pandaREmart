@@ -6,20 +6,15 @@ export default function OrderTrackingComponent() {
     <React.Fragment>
       <div className="card otp-component">
         <h3>Success!</h3>
+        <h6>Your recurring order has been confirmed.</h6>
         <br />
-        <div>Estimated delivery time</div>
-        <h4>20 - 30 mins</h4>
         <div>Next delivery date</div>
         <h4>23 Mar 2023</h4>
         <div>Next delivery time</div>
         <h4>4:00 PM</h4>
-        <Link to="/user">
+        <Link to="/recurring-order">
           <button className="btn pink">Check recurring orders</button>
         </Link>
-        <Link to="/">
-          <button className="btn pink">Edit cart</button>
-        </Link>
-        <button className="btn pink">Edit date and time</button>
       </div>
     </React.Fragment>
   );

@@ -1,14 +1,12 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import PersonalDetails from "../components/PersonalDetails";
 import RecurringOrderComponent from "../components/RecurringOrderComponent";
 
-export default function UserPage() {
+export default function RecurringOrderPage() {
   return (
     <React.Fragment>
       <NavBar />
-      <div className="user-page">
-        <PersonalDetails />
+      <div className="recurring-order">
         <RecurringOrderComponent />
       </div>
     </React.Fragment>
