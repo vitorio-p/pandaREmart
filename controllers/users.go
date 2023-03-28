@@ -33,7 +33,7 @@ func usersRegistration(c *gin.Context) {
 		FirstName: json.FirstName,
 		LastName:  json.LastName,
 		Email:     json.Email,
-		PhoneNo:   json.PhoneNo,
+		Phone:     json.Phone,
 	}); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("database", err))
 		return

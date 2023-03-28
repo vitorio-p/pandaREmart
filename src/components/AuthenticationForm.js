@@ -77,7 +77,7 @@ export default function AuthenticationForm(props) {
             <input
               type="number"
               className="form-control mt-1"
-              name="phone_no"
+              name="phone"
             />
           </div>
           <div className="form-group mt-3">
