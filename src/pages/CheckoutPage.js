@@ -1,17 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import CartDetails from "../components/CartDetails";
 import DeliveryDetails from "../components/DeliveryDetails";
 import NavBar from "../components/NavBar";
 import PaymentDetails from "../components/PaymentDetails";
 import PersonalDetails from "../components/PersonalDetails";
-import CartDetails from "../components/CartDetails"
 
 export default function CheckoutPage() {
+  const location = useLocation();
+  const cart = location.state;
+
   return (
     <React.Fragment>
       <NavBar />
       <div className="checkout">
-        <CartDetails />
+        <CartDetails state={cart} />
         <DeliveryDetails />
         <PersonalDetails />
         <PaymentDetails />
