@@ -2,11 +2,12 @@ package models
 
 import (
 	"errors"
+	"os"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
-	"os"
-	"time"
 )
 
 type User struct {
@@ -16,6 +17,7 @@ type User struct {
 	LastName  string `gorm:"varchar(255);not null"`
 	Username  string `gorm:"column:username"`
 	Email     string `gorm:"column:email;unique_index"`
+	PhoneNo   int    `gorm:"column:phone;unique_index"`
 	Password  string `gorm:"column:password;not null"`
 
 	Comments []Comment `gorm:"foreignkey:UserId"`
@@ -27,7 +29,8 @@ type User struct {
 // What's bcrypt? https://en.wikipedia.org/wiki/Bcrypt
 // Golang bcrypt doc: https://godoc.org/golang.org/x/crypto/bcrypt
 // You can change the value in bcrypt.DefaultCost to adjust the security index.
-// 	err := userModel.setPassword("password0")
+//
+//	err := userModel.setPassword("password0")
 func (u *User) SetPassword(password string) error {
 	if len(password) == 0 {
 		return errors.New("password should not be empty")
@@ -40,7 +43,8 @@ func (u *User) SetPassword(password string) error {
 }
 
 // Database will only save the hashed string, you should check it by util function.
-// 	if err := serModel.checkPassword("password0"); err != nil { password error }
+//
+//	if err := serModel.checkPassword("password0"); err != nil { password error }
 func (u *User) IsValidPassword(password string) error {
 	bytePassword := []byte(password)
 	byteHashedPassword := []byte(u.Password)
