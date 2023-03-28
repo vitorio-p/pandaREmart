@@ -9,7 +9,7 @@ export default class NavBar extends React.Component {
     return (
       <React.Fragment>
         <nav className="navbar container-fluid px-2 position-relative">
-          <Link to="/auth">
+          <Link to="/users/signup">
             <UserSVG />
           </Link>
           <Link to="/user">

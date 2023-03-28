@@ -13,7 +13,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<StoreFront />} />
-      <Route exact path="/auth" element={<AuthenticationPage />} />
+      <Route exact path="/users/signup" element={<AuthenticationPage />} />
       <Route exact path="/user" element={<UserPage />} />
       <Route exact path="/cart" element={<CartPage />} />
       <Route exact path="/checkout" element={<CheckoutPage />} />
@@ -23,3 +23,6 @@ function App() {
 }
 
 export default App;
+
+// login = /users/login
+// signup = /users/signup
