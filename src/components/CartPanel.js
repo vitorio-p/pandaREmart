@@ -177,9 +177,9 @@ export default function CartPanel() {
     state.others.total = total;
   }
 
-  window.onload = function() {
+  window.onload = () => {
     setTimeout(updatePrices(), 1000);
-  }
+  };
 
   return (
     <React.Fragment>

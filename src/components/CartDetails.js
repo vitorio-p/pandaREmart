@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function CartDetails(props) {
 
@@ -40,6 +41,14 @@ export default function CartDetails(props) {
           <div>Total</div>
           <div>S$ {props.state.others.total}</div>
         </div>
+        <Link
+            className="d-grid padding mt-1"
+            to="/"
+            style={{ textDecoration: "none" }}
+            state={props}
+          >
+            <button className="padding btn pink">Edit order</button>
+          </Link>
       </div>
     </React.Fragment>
   );

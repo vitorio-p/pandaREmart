@@ -47,7 +47,7 @@ export default function AuthenticationForm(props) {
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" method="POST">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
@@ -74,7 +74,11 @@ export default function AuthenticationForm(props) {
           </div>
           <div className="form-group mt-3">
             <label>Phone Number</label>
-            <input type="number" className="form-control mt-1" name="phone_number" />
+            <input
+              type="number"
+              className="form-control mt-1"
+              name="phone_no"
+            />
           </div>
           <div className="form-group mt-3">
             <label>Email Address</label>
