@@ -14,17 +14,17 @@ import (
 )
 
 func RegisterUserRoutes(router *gin.RouterGroup) {
-	router.POST("/", usersRegistration)
+	router.POST("/signup", usersRegistration)
 	router.POST("/login", usersLogin)
 }
 
 func usersRegistration(c *gin.Context) {
 
 	var json dtos.RegisterRequestDto
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
-		return
-	}
+	// if err := c.ShouldBindJSON(&json); err != nil {
+	// 	c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
+	// 	return
+	// }
 
 	password, _ := bcrypt.GenerateFromPassword([]byte(json.Password), bcrypt.DefaultCost)
 	if err := services.CreateOne(&models.User{
@@ -33,6 +33,7 @@ func usersRegistration(c *gin.Context) {
 		FirstName: json.FirstName,
 		LastName:  json.LastName,
 		Email:     json.Email,
+		PhoneNo:   json.PhoneNo,
 	}); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("database", err))
 		return

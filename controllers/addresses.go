@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"go.mod/dtos"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 
@@ -13,11 +12,11 @@ import (
 
 func RegisterAddressesRoutes(router *gin.RouterGroup) {
 
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.GET("/addresses", listAddresses)
-		router.POST("/addresses", createAddress)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.GET("/addresses", listAddresses)
+	router.POST("/addresses", createAddress)
+	// }
 
 }
 
@@ -36,7 +35,6 @@ func listAddresses(c *gin.Context) {
 		page = 1
 	}
 
-	// userId:= c.Keys["currentUserId"].(uint) // or
 	userId := c.MustGet("currentUserId").(uint)
 	includeUser := false
 	addresses, totalCommentCount := services.FetchAddressesPage(userId, page, pageSize, includeUser)

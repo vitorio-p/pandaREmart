@@ -6,18 +6,17 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.mod/dtos"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 )
 
 func RegisterOrderRoutes(router *gin.RouterGroup) {
 	router.POST("", createOrder)
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.GET("", listOrders)
-		router.GET("/:id", showOrder)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.GET("", listOrders)
+	router.GET("/:id", showOrder)
+	// }
 }
 
 func listOrders(c *gin.Context) {

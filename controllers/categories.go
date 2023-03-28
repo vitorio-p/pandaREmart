@@ -11,17 +11,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mod/dtos"
 	"go.mod/infrastructure"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 )
 
 func RegisterCategoryRoutes(router *gin.RouterGroup) {
 	router.GET("", categoryList)
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.POST("", createCategory)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.POST("", createCategory)
+	// }
 }
 
 func categoryList(c *gin.Context) {

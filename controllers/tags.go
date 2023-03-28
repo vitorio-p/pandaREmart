@@ -10,17 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mod/dtos"
 	"go.mod/infrastructure"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 )
 
 func RegisterTagRoutes(router *gin.RouterGroup) {
 	router.GET("", tagList)
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.POST("", createTag)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.POST("", createTag)
+	// }
 }
 
 func tagList(c *gin.Context) {

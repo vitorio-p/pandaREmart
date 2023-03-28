@@ -12,7 +12,6 @@ import (
 	"github.com/gosimple/slug"
 	"go.mod/dtos"
 	"go.mod/infrastructure"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 
@@ -24,11 +23,11 @@ func RegisterProductRoutes(router *gin.RouterGroup) {
 	router.GET("/", productList)
 	router.GET("/:slug", getProductDetailsBySlug)
 
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.POST("/", createProduct)
-		router.DELETE("/:slug", productDelete)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.POST("/", createProduct)
+	router.DELETE("/:slug", productDelete)
+	// }
 }
 
 func productList(c *gin.Context) {

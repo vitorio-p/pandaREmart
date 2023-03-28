@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mod/dtos"
 	"go.mod/infrastructure"
-	"go.mod/middlewares"
 	"go.mod/models"
 	"go.mod/services"
 
@@ -19,12 +18,12 @@ func RegisterCommentRoutes(router *gin.RouterGroup) {
 	router.GET("/products/:slug/comments/:id", showComment)
 	router.GET("/comments/:id", showComment)
 
-	router.Use(middlewares.EnforceAuthenticatedMiddleware())
-	{
-		router.POST("/products/:slug/comments", createComment)
-		router.DELETE("/comments/:id", DeleteComment)
-		router.DELETE("/products/:slug/comments/:id", DeleteComment)
-	}
+	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
+	// {
+	router.POST("/products/:slug/comments", createComment)
+	router.DELETE("/comments/:id", DeleteComment)
+	router.DELETE("/products/:slug/comments/:id", DeleteComment)
+	// }
 
 }
 
