@@ -5,22 +5,23 @@ import DeliveryDetails from "../components/DeliveryDetails";
 import NavBar from "../components/NavBar";
 import PaymentDetails from "../components/PaymentDetails";
 import PersonalDetails from "../components/PersonalDetails";
+import axios from "axios";
 
 export default function CheckoutPage() {
   const location = useLocation();
   const cart = location.state;
+  console.log('cart is', cart)
 
-  // const state = {
-  //   recurringOrderDetails: {
-  //     id: 0,
-  //     name: "Order 1",
-  //     days: ["mon", "tue"],
-  //     time: "1400",
-  //     repeat: "1 week",
-  //     ends: "never",
-  //   },
-  //   paymentMethod: "",
-  // };
+  function postToBE() {
+    axios
+      .post("/orders", cart)
+      .then(function (response) {
+        console.log("response", response);
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      });
+  }
 
   return (
     <React.Fragment>
@@ -30,13 +31,14 @@ export default function CheckoutPage() {
         <DeliveryDetails />
         <PersonalDetails />
         <PaymentDetails />
-        {/* POST API to store order into db */}
         <Link
           className="d-grid mt-2"
           to="/order-tracking"
           style={{ textDecoration: "none" }}
         >
-          <button className="padding btn pink">Place order</button>
+          <button className="padding btn pink" onClick={postToBE}>
+            Place order
+          </button>
         </Link>
       </div>
     </React.Fragment>
