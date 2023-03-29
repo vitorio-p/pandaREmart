@@ -25,20 +25,22 @@ func usersRegistration(c *gin.Context) {
 		return
 	}
 	password, _ := bcrypt.GenerateFromPassword([]byte(json.Password), bcrypt.DefaultCost)
-	if err := services.CreateOne(&models.User{Username: json.Username,
+	user := &models.User{Username: json.Username,
 		Password:  string(password),
 		FirstName: json.FirstName,
 		LastName:  json.LastName,
 		Email:     json.Email,
 		Phone:     json.Phone,
-	}); err != nil {
+	}
+	if err := services.CreateOne(user); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("database", err))
 		return
 	}
-
-	c.JSON(http.StatusCreated, gin.H{
-		"success":       true,
-		"full_messages": []string{"User created successfully"}})
+	c.Set("currentUser", user)
+	c.Redirect(http.StatusMovedPermanently, "/")
+	// c.JSON(http.StatusCreated, gin.H{
+	// 	"success":       true,
+	// 	"full_messages": []string{"User created successfully"}})
 }
 
 func usersLogin(c *gin.Context) {
@@ -50,7 +52,6 @@ func usersLogin(c *gin.Context) {
 	}
 
 	user, err := services.FindOneUser(&models.User{Username: json.Username})
-
 	if err != nil {
 		c.JSON(http.StatusForbidden, dtos.CreateDetailedErrorDto("login_error", err))
 		return
@@ -60,7 +61,7 @@ func usersLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden, dtos.CreateDetailedErrorDto("login", errors.New("invalid credentials")))
 		return
 	}
-
+	c.Set("currentUser", user)
 	c.JSON(http.StatusOK, dtos.CreateLoginSuccessful(&user))
-
+	c.Redirect(http.StatusMovedPermanently, "/")
 }
