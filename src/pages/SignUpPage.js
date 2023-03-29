@@ -1,12 +1,12 @@
 import React from "react";
-import AuthenticationForm from "../components/AuthenticationForm";
+import SignUpForm from "../components/SignUpForm";
 import NavBar from "../components/NavBar";
 
-export default function AuthenticationPage() {
+export default function SignUpPage() {
   return (
     <React.Fragment>
       <NavBar />
-      <AuthenticationForm />
+      <SignUpForm />
     </React.Fragment>
   );
 }
