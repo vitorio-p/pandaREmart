@@ -1,6 +1,6 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 export default function RecurringOrderDetails() {
   const state = {
@@ -31,6 +31,26 @@ export default function RecurringOrderDetails() {
     },
   };
 
+  const ordersState = {
+    orders: [
+      {
+        id: 0,
+        date: "6 April 2023",
+        time: "4:00 PM",
+      },
+      {
+        id: 1,
+        date: "13 April 2023",
+        time: "4:00 PM",
+      },
+      {
+        id: 2,
+        date: "20 April 2023",
+        time: "4:00 PM",
+      },
+    ],
+  };
+
   axios
     .get("/orders/1")
     .then(function (response) {
@@ -45,12 +65,10 @@ export default function RecurringOrderDetails() {
 
   function renderItems() {
     let jsx = [];
-    let id = 1;
-
     for (let item of state.items) {
       if (item.quantity !== 0) {
         jsx.push(
-          <div className="cart-box padding" id={id}>
+          <div className="cart-box padding" id={item.id}>
             <div className="cart-details-item">
               <div>{item.quantity} ×</div>
               <div className="padding">{item.name}</div>
@@ -58,15 +76,43 @@ export default function RecurringOrderDetails() {
             </div>
           </div>
         );
-        id++;
       }
     }
     return jsx;
   }
 
-  const cancelOrder = () => {
-    const order = document.getElementById("order");
-    order.remove();
+  function renderOrders() {
+    let jsx = [];
+    for (let order of ordersState.orders) {
+      jsx.push(
+        <tr id={order.id} className="orders">
+          <td>{order.date}</td>
+          <td>{order.time}</td>
+          <td>
+            <button className="btn pink" id={order.id} onClick={cancelOrder}>
+              Cancel
+            </button>
+          </td>
+        </tr>
+      );
+    }
+    return jsx;
+  }
+
+  const cancelOrder = (order) => {
+    const idToBeCancelled = order.target.id;
+    const orderToBeCancelled = document.getElementsByClassName("orders");
+    for (let orderItem of orderToBeCancelled) {
+      if (orderItem.id === idToBeCancelled) {
+        orderItem.remove();
+        if (orderToBeCancelled.length === 3) {
+          const orders = document.querySelectorAll(".orders");
+          orders.forEach((order) => {
+            order.remove();
+          });
+        }
+      }
+    }
   };
 
   const cancelAllOrder = () => {
@@ -80,7 +126,7 @@ export default function RecurringOrderDetails() {
     <React.Fragment>
       <div className="card recurring-order-page ">
         <h3 className="padding">Order 1</h3>
-        <div className="card checkout-page orders">
+        <div className="card checkout-page orders" name="change">
           <h3>Cart details</h3>
           <div className="cart-content">{renderItems(state)}</div>
           <div className="side-by-side">
@@ -98,7 +144,7 @@ export default function RecurringOrderDetails() {
         </div>
 
         <div className="rop-component">
-          <table class="table table-striped">
+          <table className="table table-striped orders">
             <thead>
               <tr>
                 <th scope="col">Date</th>
@@ -106,35 +152,7 @@ export default function RecurringOrderDetails() {
                 <th scope="col">Cancel</th>
               </tr>
             </thead>
-            <tbody>
-              <tr id="order" className="orders">
-                <td>6 April</td>
-                <td>4:00 PM</td>
-                <td>
-                  <button className="btn pink" onClick={cancelOrder}>
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-              <tr id="order" className="orders">
-                <td>13 April</td>
-                <td>4:00 PM</td>
-                <td>
-                  <button className="btn pink" onClick={cancelOrder}>
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-              <tr id="order" className="orders">
-                <td>20 April</td>
-                <td>4:00 PM</td>
-                <td>
-                  <button className="btn pink" onClick={cancelOrder}>
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody>{renderOrders(ordersState)}</tbody>
           </table>
         </div>
         <button className="btn pink orders" onClick={cancelAllOrder}>
