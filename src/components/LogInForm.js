@@ -1,15 +1,10 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function LogInForm() {
-  const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    navigate("/");
-  };
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form" method="POST" onSubmit={handleSubmit}>
+      <form className="Auth-form" method="POST">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Log In</h3>
           <div className="text-center">
