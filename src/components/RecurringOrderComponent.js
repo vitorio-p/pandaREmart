@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function RecurringOrderComponent() {
   const state = {
@@ -11,6 +12,18 @@ export default function RecurringOrderComponent() {
       },
     ],
   };
+
+  axios
+    .get("/orders/1")
+    .then(function (response) {
+      console.log("response is", response);
+    })
+    .catch(function (error) {
+      console.log("error is", error);
+    })
+    .finally(function () {
+      console.log("axios is working");
+    });
 
   const cancelOrder = () => {
     const order = document.getElementById("order");
@@ -31,7 +44,11 @@ export default function RecurringOrderComponent() {
                 style={{ textDecoration: "none" }}
                 state={state}
               >
-                <button className="btn pink">View</button>
+                <form method="POST">
+                  <button className="btn pink" type="submit">
+                    View
+                  </button>
+                </form>
               </Link>
             </td>
             <td>
@@ -40,7 +57,7 @@ export default function RecurringOrderComponent() {
                   className="form-check-input"
                   type="checkbox"
                   id="flexSwitchCheckReverse"
-                  checked
+                  defaultChecked={true}
                 />
               </div>
             </td>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import eggImage from "../img/dasoon-eggs.webp";
@@ -25,6 +26,18 @@ export default function PopularProducts() {
       },
     ],
   };
+
+  axios
+    .get("/products")
+    .then(function (response) {
+      console.log("response is", response);
+    })
+    .catch(function (error) {
+      console.log("error is", error);
+    })
+    .finally(function () {
+      console.log("axios is working");
+    });
 
   function renderItems(state) {
     let jsx = [];

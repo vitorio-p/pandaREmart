@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function SignUpForm() {
-
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" method="POST">
@@ -32,11 +31,7 @@ export default function SignUpForm() {
           </div>
           <div className="form-group mt-3">
             <label>Phone Number</label>
-            <input
-              type="number"
-              className="form-control mt-1"
-              name="phone"
-            />
+            <input type="number" className="form-control mt-1" name="phone" />
           </div>
           <div className="form-group mt-3">
             <label>Email Address</label>
@@ -51,10 +46,7 @@ export default function SignUpForm() {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button
-              type="submit"
-              className="btn pink"
-            >
+            <button type="submit" className="btn pink">
               Submit
             </button>
           </div>

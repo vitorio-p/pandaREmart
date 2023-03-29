@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function RecurringOrderDetails() {
   const state = {
@@ -29,6 +30,18 @@ export default function RecurringOrderDetails() {
       total: 17,
     },
   };
+
+  axios
+    .get("/orders/1")
+    .then(function (response) {
+      console.log("response is", response);
+    })
+    .catch(function (error) {
+      console.log("error is", error);
+    })
+    .finally(function () {
+      console.log("axios is working");
+    });
 
   function renderItems() {
     let jsx = [];
