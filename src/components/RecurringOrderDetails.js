@@ -15,7 +15,7 @@ export default function RecurringOrderDetails() {
         id: 1,
         name: "Meiji Fresh Milk 2L",
         price: 7,
-        quantity: 1,
+        quantity: 2,
       },
       {
         id: 2,
@@ -25,9 +25,9 @@ export default function RecurringOrderDetails() {
       },
     ],
     others: {
-      subtotal: 15,
+      subtotal: 22,
       deliveryFee: 2,
-      total: 17,
+      total: 24,
     },
   };
 
