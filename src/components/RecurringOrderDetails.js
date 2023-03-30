@@ -36,17 +36,17 @@ export default function RecurringOrderDetails() {
       {
         id: 0,
         date: "6 April 2023",
-        time: "4:00 PM",
+        time: "2:00 PM",
       },
       {
         id: 1,
         date: "13 April 2023",
-        time: "4:00 PM",
+        time: "2:00 PM",
       },
       {
         id: 2,
         date: "20 April 2023",
-        time: "4:00 PM",
+        time: "2:00 PM",
       },
     ],
   };

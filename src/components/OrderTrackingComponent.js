@@ -9,9 +9,9 @@ export default function OrderTrackingComponent() {
         <h6>Your recurring order has been confirmed.</h6>
         <br />
         <div>Next delivery date</div>
-        <h4>23 Mar 2023</h4>
+        <h4>6 April 2023</h4>
         <div>Next delivery time</div>
-        <h4>4:00 PM</h4>
+        <h4>2:00 PM</h4>
         <Link to="/recurring-order">
           <button className="btn pink">Check recurring orders</button>
         </Link>
