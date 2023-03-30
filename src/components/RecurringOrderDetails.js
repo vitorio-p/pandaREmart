@@ -155,6 +155,7 @@ export default function RecurringOrderDetails() {
             <tbody>{renderOrders(ordersState)}</tbody>
           </table>
         </div>
+        <button className="btn pink orders">Show more </button>
         <button className="btn pink orders" onClick={cancelAllOrder}>
           Cancel all recurring order
         </button>
