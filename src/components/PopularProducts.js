@@ -7,25 +7,11 @@ import "../styles.css";
 import addToCartButton from "../svg/ic-add.svg";
 import { ReactComponent as PandaMart } from "../svg/pandamart-white.svg";
 import ItemModal from "./ItemModal";
+import { storeMock } from "../storeMock"
 
 export default function PopularProducts() {
-  // GET data from backend. this should be independent from CartPanel.js
-  const state = {
-    items: [
-      {
-        id: 1,
-        name: "Dasoon Premium Fresh Egg 15S",
-        price: 5,
-        image: eggImage,
-      },
-      {
-        id: 2,
-        name: "Meiji Fresh Milk 2L",
-        price: 7,
-        image: milkImage,
-      },
-    ],
-  };
+
+  const state = storeMock;
 
   axios
     .get("/products")
