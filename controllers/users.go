@@ -62,6 +62,6 @@ func usersLogin(c *gin.Context) {
 		return
 	}
 	c.Set("currentUser", user)
-	c.JSON(http.StatusOK, dtos.CreateLoginSuccessful(&user))
+	// c.JSON(http.StatusOK, dtos.CreateLoginSuccessful(&user))
 	c.Redirect(http.StatusMovedPermanently, "/")
 }

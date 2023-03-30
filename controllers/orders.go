@@ -46,7 +46,11 @@ func showOrder(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("parsingInt_error", err))
 	}
-	user := c.MustGet("currentUser").(models.User)
+	userObj, userLoggedIn := c.Get("currentUser")
+	var user models.User
+	if userLoggedIn {
+		user = (userObj).(models.User)
+	}
 	order, err := services.FetchOrderDetails(uint(orderId))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
@@ -63,7 +67,7 @@ func showOrder(c *gin.Context) {
 
 func createOrder(c *gin.Context) {
 	var orderRequest dtos.CreateOrderRequest
-	if err := c.ShouldBind(&orderRequest); err != nil {
+	if err := c.Bind(&orderRequest); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
 		return
 	}
@@ -150,5 +154,4 @@ func createOrder(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, dtos.CreateOrderCreatedDto(&order))
-
 }
