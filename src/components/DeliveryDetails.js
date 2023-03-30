@@ -32,7 +32,7 @@ export default function DeliveryDetails() {
             className="form-check-label side-by-side"
             for="flexSwitchCheckReverse"
           >
-            <h5>Recurring order</h5>
+            <h5 className="pink">Recurring order</h5>
           </label>
         </div>
         {isShown && (
