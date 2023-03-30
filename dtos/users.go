@@ -15,9 +15,7 @@ type RegisterRequestDto struct {
 
 type LoginRequestDto struct {
 	Username string `form:"username" json:"username" xml:"username" binding:"required"`
-	Password string `form:"password"json:"password" binding:"exists,min=8,max=255"`
-
-	userModel models.User `json:"-"`
+	Password string `form:"password" json:"password" xml:"password" binding:"required"`
 }
 
 func CreateLoginSuccessful(user *models.User) map[string]interface{} {

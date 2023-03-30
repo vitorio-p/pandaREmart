@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.af077ad3.css",
+    "main.js": "/static/js/main.729ba21a.js",
+    "static/js/787.1e47ed66.chunk.js": "/static/js/787.1e47ed66.chunk.js",
+    "static/media/meiji-2l-milk.png": "/static/media/meiji-2l-milk.24acdbb3cba9eaefdaf6.png",
+    "static/media/bread.jpeg": "/static/media/bread.29bf006f89a67dd08c9e.jpeg",
+    "static/media/dasoon-eggs.webp": "/static/media/dasoon-eggs.dddc70514752c2bf4050.webp",
+    "static/media/cheese.webp": "/static/media/cheese.85e812f1716e95e3489e.webp",
+    "static/media/lays.webp": "/static/media/lays.cff6de67fe489afbe40d.webp",
+    "static/media/foodpandaREmart.png": "/static/media/foodpandaREmart.addec041d0d3e0c22964.png",
+    "static/media/pandamart-white.svg": "/static/media/pandamart-white.5417b7ab71943a7c360821fe683a6838.svg",
+    "static/media/rubbish-bin.svg": "/static/media/rubbish-bin.40273eb86e783b8f986864a074259c2a.svg",
+    "static/media/cart.svg": "/static/media/cart.a8f726b37cd37b348d13e3628dfcd721.svg",
+    "static/media/user.svg": "/static/media/user.85bd785bb9e04f83686ff429cf040823.svg",
+    "static/media/ic-add.svg": "/static/media/ic-add.b96141b34944bdf41640e2c5b8aa0172.svg",
+    "static/media/add.svg": "/static/media/add.29f44cb5b610cd371a02ffc845791e70.svg",
+    "index.html": "/index.html",
+    "static/media/subtract.svg": "/static/media/subtract.b48fe38f90f4acc7b521cec6f15b4378.svg",
+    "main.af077ad3.css.map": "/static/css/main.af077ad3.css.map",
+    "main.729ba21a.js.map": "/static/js/main.729ba21a.js.map",
+    "787.1e47ed66.chunk.js.map": "/static/js/787.1e47ed66.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.af077ad3.css",
+    "static/js/main.729ba21a.js"
+  ]
+}

@@ -47,13 +47,13 @@ func usersLogin(c *gin.Context) {
 
 	var json dtos.LoginRequestDto
 	if err := c.Bind(&json); err != nil {
-		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
+		c.JSON(http.StatusBadRequest, dtos.CreateDetailedErrorDto("login", errors.New("binding error")))
 		return
 	}
 
 	user, err := services.FindOneUser(&models.User{Username: json.Username})
 	if err != nil {
-		c.JSON(http.StatusForbidden, dtos.CreateDetailedErrorDto("login_error", err))
+		c.JSON(http.StatusForbidden, err)
 		return
 	}
 
@@ -62,6 +62,6 @@ func usersLogin(c *gin.Context) {
 		return
 	}
 	c.Set("currentUser", user)
-	c.JSON(http.StatusOK, dtos.CreateLoginSuccessful(&user))
+	// c.JSON(http.StatusOK, dtos.CreateLoginSuccessful(&user))
 	c.Redirect(http.StatusMovedPermanently, "/")
 }
