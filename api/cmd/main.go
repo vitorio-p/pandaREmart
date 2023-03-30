@@ -110,7 +110,7 @@ func main() {
 	goGonicEngine.Use(static.Serve("/", static.LocalFile("./build", true)))
 
 	controllers.RegisterUserRoutes(goGonicEngine.Group("/users"))
-	controllers.RegisterProductRoutes(goGonicEngine.Group("/products"))
+	// controllers.RegisterProductRoutes(goGonicEngine.Group("/products"))
 	controllers.RegisterCommentRoutes(goGonicEngine.Group("/"))
 	controllers.RegisterPageRoutes(goGonicEngine.Group("/"))
 	controllers.RegisterAddressesRoutes(goGonicEngine.Group("/users"))

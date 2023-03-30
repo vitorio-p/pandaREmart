@@ -16,6 +16,10 @@ func randomInt(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
+func randomFloat32(min, max int) float32 {
+	return float32(rand.Intn(max-min) + min)
+}
+
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func randomString(length int) string {
@@ -142,7 +146,7 @@ func seedProducts(db *gorm.DB) {
 			categoryForProduct := categories[rand.Intn(len(categories))]
 
 			product := &models.Product{Name: fake.ProductName(), Description: fake.Paragraph(),
-				Stock: randomInt(100, 2000), Price: randomInt(50, 1000),
+				Stock: randomInt(100, 2000), Price: randomFloat32(1, 10),
 				Tags: []models.Tag{tagForProduct}, Categories: []models.Category{categoryForProduct}}
 			for i := 0; i < randomInt(1, 4); i++ {
 				productImage := models.FileUpload{Filename: randomString(16) + ".png", OriginalName: randomString(16) + ".png",

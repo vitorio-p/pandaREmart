@@ -10,7 +10,7 @@ type Product struct {
 	Name        string       `gorm:"size:280;not null"`
 	Description string       `gorm:"not null"`
 	Slug        string       `gorm:"unique_index;not null"`
-	Price       int          `gorm:"not null"`
+	Price       float32      `gorm:"not null"`
 	Stock       int          `gorm:"not null"`
 	Tags        []Tag        `gorm:"many2many:products_tags;"`
 	ProductTags []ProductTag `gorm:"foreignkey:ProductId"`
