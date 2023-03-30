@@ -9,7 +9,7 @@ import subtractImage from "../svg/subtract.svg";
 
 export default function CartPanel() {
   const state = {
-    items: [
+    cart_items: [
       {
         id: 0,
         name: "Dasoon Premium Fresh Egg 15S",
@@ -42,7 +42,7 @@ export default function CartPanel() {
   function renderItems(state) {
     let jsx = [];
 
-    for (let item of state.items) {
+    for (let item of state.cart_items) {
       jsx.push(
         <div className="cart-box padding mb-4" id={item.id} key={item.id}>
           <div className="cart-item mb-2">
@@ -95,7 +95,7 @@ export default function CartPanel() {
     for (let cartItem of itemToBeDeleted) {
       if (cartItem.id === idToBeDeleted) {
         cartItem.remove();
-        state.items[idToBeDeleted].quantity = 0;
+        state.cart_items[idToBeDeleted].quantity = 0;
       }
       updatePrices();
     }
@@ -107,7 +107,7 @@ export default function CartPanel() {
     for (let cartItem of inputBox) {
       if (cartItem.id === idToBeAdded) {
         cartItem.value++;
-        state.items[idToBeAdded].quantity = +cartItem.value;
+        state.cart_items[idToBeAdded].quantity = +cartItem.value;
       }
       updatePrices();
     }
@@ -119,7 +119,7 @@ export default function CartPanel() {
     for (let cartItem of inputBox) {
       if (cartItem.id === idToBeSubtracted) {
         cartItem.value--;
-        state.items[idToBeSubtracted].quantity = +cartItem.value;
+        state.cart_items[idToBeSubtracted].quantity = +cartItem.value;
       }
       if (cartItem.value < 1) {
         deleteItem(item);
