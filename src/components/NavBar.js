@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import cartLogo from "../svg/cart.svg";
-import { ReactComponent as FoodpandaLogoSVG } from "../svg/foodpanda-logo-plain.svg";
+import pandaREmart from "../img/foodpandaREmart.png";
 import { ReactComponent as UserSVG } from "../svg/user.svg";
 
 export default class NavBar extends React.Component {
@@ -13,7 +13,11 @@ export default class NavBar extends React.Component {
             <UserSVG />
           </Link>
           <Link to="/">
-            <FoodpandaLogoSVG className="foodpandaLogo translate-middle-x" />
+            <img
+              src={pandaREmart}
+              alt="logo"
+              className="foodpandaLogo translate-middle-x pandaREmart"
+            />
           </Link>
           <Link to="/recurring-order">
             <img src={cartLogo} alt="recurring order" />
