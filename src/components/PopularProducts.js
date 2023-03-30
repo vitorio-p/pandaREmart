@@ -1,16 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
-import eggImage from "../img/dasoon-eggs.webp";
-import milkImage from "../img/meiji-2l-milk.png";
+import { storeMock } from "../storeMock";
 import "../styles.css";
 import addToCartButton from "../svg/ic-add.svg";
 import { ReactComponent as PandaMart } from "../svg/pandamart-white.svg";
 import ItemModal from "./ItemModal";
-import { storeMock } from "../storeMock"
 
 export default function PopularProducts() {
-
   const state = storeMock;
 
   axios
