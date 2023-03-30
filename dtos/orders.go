@@ -15,9 +15,15 @@ type CreateOrderRequest struct {
 	ZipCode       string `form:"zip_code" json:"zip_code" xml:"zip_code" `
 	AddressId     uint   `form:"address_id" json:"address_id" xml:"address_id" `
 	CartItems     []struct {
-		Id       uint `form:"id" json:"id" binding:"required"`
-		Quantity int  `form:"quantity" json:"quantity" binding:"required"`
+		Id       uint    `form:"id" json:"id" binding:"required"`
+		Name     string  `form:"name" json:"name" binding:"required"`
+		Price    float32 `form:"price" json:"price" binding:"required"`
+		Quantity int     `form:"quantity" json:"quantity" binding:"required"`
 	} `json:"cart_items"`
+	RecurringDetails []struct {
+		StartDay      string `form:"start_day" json:"start_day"`
+		RecurringReps uint   `form:"recurring_reps" json:"recurring_reps"`
+	} `json:"recurring_details"`
 }
 
 func CreateOrderPagedResponse(request *http.Request, orders []models.Order, page, page_size, totalOrdersCount int, includes ...bool) map[string]interface{} {
