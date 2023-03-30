@@ -10,11 +10,16 @@ import axios from "axios";
 export default function CheckoutPage() {
   const location = useLocation();
   const cart = location.state;
-  console.log('cart is', cart)
+  const data = JSON.stringify(cart);
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
   function postToBE() {
     axios
-      .post("/orders", cart)
+      .post("/orders", data, customConfig)
       .then(function (response) {
         console.log("response", response);
       })

@@ -6,7 +6,7 @@ export default function CartDetails(props) {
     let jsx = [];
     let id = 1;
 
-    for (let item of props.state.items) {
+    for (let item of props.state.cart_items) {
       if (item.quantity !== 0) {
         jsx.push(
           <div className="cart-box padding" id={id}>
