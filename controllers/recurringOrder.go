@@ -10,7 +10,7 @@ import (
 	"go.mod/services"
 )
 
-func RegisterOrderRoutes(router *gin.RouterGroup) {
+func RegisterRecurringOrderRoutes(router *gin.RouterGroup) {
 	router.POST("", createOrder)
 	// router.Use(middlewares.EnforceAuthenticatedMiddleware())
 	// {
@@ -19,7 +19,7 @@ func RegisterOrderRoutes(router *gin.RouterGroup) {
 	// }
 }
 
-func listOrders(c *gin.Context) {
+func listRecurringOrders(c *gin.Context) {
 	pageSizeStr := c.Query("page_size")
 	pageStr := c.Query("page")
 	pageSize, err := strconv.Atoi(pageSizeStr)
@@ -41,8 +41,8 @@ func listOrders(c *gin.Context) {
 	c.JSON(http.StatusOK, dtos.CreateOrderPagedResponse(c.Request, orders, page, pageSize, totalCommentCount, false, false))
 }
 
-func showOrder(c *gin.Context) {
-	orderId, err := strconv.Atoi(c.Param("id"))
+func showReccuringOrder(c *gin.Context) {
+	recurringId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("parsingInt_error", err))
 	}
@@ -51,7 +51,7 @@ func showOrder(c *gin.Context) {
 	if userLoggedIn {
 		user = (userObj).(models.User)
 	}
-	order, err := services.FetchOrderDetails(uint(orderId))
+	order, err := services.FetchOrderDetails(uint(recurringId))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.CreateDetailedErrorDto("db_error", err))
 		return
@@ -65,7 +65,7 @@ func showOrder(c *gin.Context) {
 	}
 }
 
-func createOrder(c *gin.Context) {
+func createRecurringOrder(c *gin.Context) {
 	var orderRequest dtos.CreateOrderRequest
 	if err := c.Bind(&orderRequest); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.CreateBadRequestErrorDto(err))
@@ -120,44 +120,38 @@ func createOrder(c *gin.Context) {
 		order.UserId = user.ID
 		order.User = user
 	}
-	orderItems := make([]models.OrderItem, len(orderRequest.CartItems))
+
+	var productIds = make([]uint, len(orderRequest.CartItems))
 	for i := 0; i < len(orderRequest.CartItems); i++ {
+		productIds[i] = orderRequest.CartItems[i].Id
+	}
+
+	products, err := services.FetchProductsIdNameAndPrice(productIds)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("db_error", err))
+		return
+	}
+
+	if len(products) != len(orderRequest.CartItems) {
+		c.JSON(http.StatusUnprocessableEntity, dtos.CreateErrorDtoWithMessage("make sure all products are still available"))
+		return
+	}
+	orderItems := make([]models.OrderItem, len(products))
+
+	for i := 0; i < len(products); i++ {
 		orderItems[i] = models.OrderItem{
-			ProductId:   orderRequest.CartItems[i].Id,
-			ProductName: orderRequest.CartItems[i].Name,
-			Price:       orderRequest.CartItems[i].Price,
+			ProductId:   products[i].ID,
+			ProductName: products[i].Name,
+			Slug:        products[i].Slug,
 			Quantity:    orderRequest.CartItems[i].Quantity,
 		}
 	}
+
 	order.OrderItems = orderItems
-	if err := services.CreateOne(&order); err != nil {
+	err = services.CreateOne(&order)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
 	c.JSON(http.StatusOK, dtos.CreateOrderCreatedDto(&order))
-	// var productIds = make([]uint, len(orderRequest.CartItems))
-	// for i := 0; i < len(orderRequest.CartItems); i++ {
-	// 	productIds[i] = orderRequest.CartItems[i].Id
-	// }
-
-	// // products, err := services.FetchProductsIdNameAndPrice(productIds)
-	// // if err != nil {
-	// // 	c.JSON(http.StatusUnprocessableEntity, dtos.CreateDetailedErrorDto("db_error", err))
-	// // 	return
-	// // }
-
-	// // if len(products) != len(orderRequest.CartItems) {
-	// // 	c.JSON(http.StatusUnprocessableEntity, dtos.CreateErrorDtoWithMessage("make sure all products are still available"))
-	// // 	return
-	// // }
-	// orderItems := make([]models.OrderItem, len(products))
-
-	// for i := 0; i < len(products); i++ {
-	// 	orderItems[i] = models.OrderItem{
-	// 		ProductId:   orderRequest.CartItems,
-	// 		ProductName: products[i].Name,
-	// 		Slug:        products[i].Slug,
-	// 		Quantity:    orderRequest.CartItems[i].Quantity,
-	// 	}
-	// }
 }
