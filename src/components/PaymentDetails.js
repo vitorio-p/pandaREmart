@@ -5,7 +5,7 @@ export default function PaymentDetails() {
     <React.Fragment>
       <div className="card checkout-page payment-section">
         <h3>Payment</h3>
-        <div>You will be charged 2 hours before the appointed time.</div>
+        <h5>You will be charged 2 hours before the appointed time.</h5>
         <div className="card payment-method">
           <div className="form-check">
             <input
