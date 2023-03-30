@@ -15,11 +15,11 @@ export default function LogInForm() {
           </div>
           <div className="form-group mt-3">
             <label>Username</label>
-            <input type="text" className="form-control mt-1" />
+            <input type="text" className="form-control mt-1" name="username" />
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
-            <input type="password" className="form-control mt-1" />
+            <input type="password" className="form-control mt-1" name="password" />
           </div>
           {/* <Link to="/"> */}
           <div className="d-grid gap-2 mt-3">
