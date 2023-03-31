@@ -17,8 +17,11 @@ For now, we will only be able to order from darkmall (pandamart) strictly.
 
 ## Case Scenario
 
-User would like to order milk and rice from pandamart every 2 weeks, to be delivered on the first and third Sunday at 12pm. Once the user sets up the pandaREmart, the app will automatically submit a pandamart order on the first and third Sunday at 10am, so that the user will be able to receive his items at 12pm.
+User would like to order groceries from pandamart every week, to be delivered every Thursday at 2pm. Once the user sets up the pandaREmart, the app will automatically submit a pandamart order on every Thursday at 12pm, so that the user will be able to receive his items at 2pm.
 
 ## Tech Stacks
 
-To be updated.
+Frontend: React.JS
+Backend: TBU
+Database: SQLite
+Server: Node.js
