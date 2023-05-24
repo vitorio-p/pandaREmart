@@ -22,5 +22,7 @@ User would like to order groceries from pandamart every week, to be delivered ev
 ## Tech Stacks
 
 Frontend: React.JS
+
 Backend: Golang, Gin, CORS, JWT
+
 Database: SQLite3
